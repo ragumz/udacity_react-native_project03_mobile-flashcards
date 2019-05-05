@@ -1,0 +1,39 @@
+PROJECT MOBILE FLASH CARDS - PENDING DEVELOPMENT
+
+OK-Set GitHub project
+OK-expot init mobile_flashcards
+	yarn add expo, react, react-native, react-navigation, react-redux, redux, react-thunk, redux-thunk
+Implement AsyncStorage API
+Design Views
+	Deck List
+	Deck Detail
+	Question List
+	Add Deck
+	Add Question
+	Quiz
+Create folders
+	deck
+	question
+	home
+	middleware
+	shared
+	utils
+Create Actions
+Create Thunk
+Create Reducers
+Create Middleware
+
+Implement Views
+	Deck View
+	Deck List
+	Question View
+	Question List
+	Deck Detail
+
+Add documentation and comments to source code
+
+Update README
+
+Generate more decks and questions default fixed data
+
+Submit to evaluation
