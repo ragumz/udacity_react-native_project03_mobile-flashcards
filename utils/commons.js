@@ -26,13 +26,26 @@ export const isEmpty = obj => {
 };
 
 /**
+ * @description Convert an array of objects into and Object itself indexed
+ * by and object own field value.
+ * @param {Array} arrObjects Array containing objects to convert into an Object
+ * @param {string} fieldKey Default to 'id'. Name of the field which contains the Object key.
+ */
+export const arrayToIndexedObject = (arrObjects = [], fieldKey = 'id') => {
+  return Array.from(arrObjects).reduce((result, item/*, index, array*/) => {
+    result[item[fieldKey]] = item;
+    return result;
+  }, {});
+};
+
+/**
  * @description Reused Tyler's code to format date and time
  * from Chirper-app example
  *
  * @param {number} timestamp The seconds epoch value representing the date
  * @return A string with time and date
  */
-export function formatDate (timestamp) {
+export function formatDate(timestamp) {
   if (isEmpty(timestamp))
     return '';
   const d = new Date(timestamp);
