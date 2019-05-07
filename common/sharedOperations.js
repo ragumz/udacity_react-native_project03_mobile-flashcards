@@ -10,22 +10,17 @@ import * as commons from '../utils/commons';
  */
 export function handleInitialData() {
   return dispatch => {
-    dispatch(showLoading())
-      .then(() => {
-        return getDecks().then(decks => {
-          dispatch(receiveDecks(decks)).then(() => {
-            return getQuestions()
-              .then(questions => dispatch(receiveQuestions(questions)))
-              .then(dispatch(hideLoading()));
-          });
-        });
-      })
-      .catch(error => {
-        dispatch(hideLoading());
-        dispatch(
-          showMessage('ERROR', 'Failed to load data from storage.', error)
-        );
-      });
+    dispatch(showLoading());
+    return getDecks()
+            .then(decks => dispatch(receiveDecks(decks))
+    ).then(() => {
+        return getQuestions()
+                .then(questions => dispatch(receiveQuestions(questions)))
+    }).catch(error => {
+        dispatch(showMessage('ERROR', 'Failed to load data from storage.', error));
+    }).finally(() => {
+      dispatch(hideLoading())
+    });
   };
 }
 
@@ -43,6 +38,7 @@ export function showAlert({title='INFORMATION', message, error='', buttons=[]}) 
     } else {
       errorMessage += error;
     }
+    console.error(errorMessage);
   }
   // Works on both iOS and Android
   Alert.alert(

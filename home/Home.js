@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { AppLoading } from 'expo';
 import { handleInitialData, showAlert } from '../common/sharedOperations';
 import { hideMessage } from '../common/sharedActions';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import * as commons from '../utils/commons';
+import DeckList from '../deck/DeckList';
 
 /**
  * @description Home page React Component with all categories and posts lists
@@ -13,8 +15,8 @@ class Home extends React.Component {
    * @description Lifecycle function to initialize application state
    */
   componentDidMount() {
-    //this.props.dispatch(handleInitialData());
     console.log('Loading data...');
+    this.props.dispatch(handleInitialData());
   }
 
   /**
@@ -25,7 +27,7 @@ class Home extends React.Component {
     if (loading === true) {
       return <AppLoading />;
     }
-    if (userMessage) {
+    if (!commons.isNull(userMessage)) {
       return showAlert(
         Object.assign({}, userMessage, {
           buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage) }]
@@ -33,10 +35,8 @@ class Home extends React.Component {
       );
     }
     return (
-      <View>
-        <View style={styles.home}>
-          <Text>Mobile Flash Cards</Text>
-        </View>
+      <View style={{flex: 1}}>
+        <DeckList />
       </View>
     );
   }
@@ -56,10 +56,3 @@ function mapStateToProps({ shared }) {
 
 export default connect(mapStateToProps)(Home);
 
-const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
