@@ -6,6 +6,7 @@ import middlewares from './utils/middlewares';
 import { StyleSheet, View, Platform } from 'react-native';
 import Home from './home/Home';
 import DeckEdit from './deck/DeckEdit';
+import DeckDetail from './deck/DeckDetail';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -15,24 +16,23 @@ import {
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import FCStatusBar from './home/FCStatusBar';
 import { COLORS } from './utils/constants';
-import DeckItem from './deck/DeckItem';
 
 const RouteConfigs = {
   ListDecks: {
     screen: Home,
     navigationOptions: {
-      tabBarLabel: 'DECKS',
+      tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="cards" size={30} color={tintColor} />
+        <MaterialCommunityIcons name="cards" size={25} color={tintColor} />
       )
     }
   },
-  EditDeck: {
+  NewDeck: {
     screen: DeckEdit,
     navigationOptions: {
-      tabBarLabel: 'NEW DECK',
+      tabBarLabel: 'New Deck',
       tabBarIcon: ({ tintColor }) => (
-        <MaterialIcons name="library-add" size={30} color={tintColor} />
+        <MaterialIcons name="library-add" size={25} color={tintColor} />
       )
     }
   }
@@ -44,6 +44,8 @@ const TabNavigatorConfig = {
   },
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? COLORS.BLUE : COLORS.WHITE,
+    showLabel: true,
+    showIcon: true,
     style: {
       height: 56,
       backgroundColor: Platform.OS === 'ios' ? COLORS.WHITE : COLORS.BLUE,
@@ -72,7 +74,7 @@ const MainNavigator = createAppContainer(
       }
     },
     DeckDetail: {
-      screen: DeckItem,
+      screen: DeckDetail,
       navigationOptions: ({ navigation }) => ({
         headerTintColor: COLORS.WHITE,
         headerStyle: {

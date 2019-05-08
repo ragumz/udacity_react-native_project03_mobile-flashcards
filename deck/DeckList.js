@@ -20,7 +20,7 @@ class DeckList extends Component {
     return (
       <ScrollView style={styles.list}>
         {Object.values(decks).map(deck =>
-          <DeckItem key={deck.id} deck={deck} />
+          <DeckItem key={deck.id} deck={deck} doNavigate={true}/>
         )}
       </ScrollView>
     );
