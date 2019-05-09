@@ -16,11 +16,11 @@ export function getDecks() {
  * @param {Object} object Current Deck object to add or update with the identifier
  * @return Promise
  */
-export function submitDeck({ deck, id }) {
+export function submitDeck(deck) {
   return AsyncStorage.mergeItem(
     STORAGE_KEYS.DECKS,
     JSON.stringify({
-      [id]: deck
+      [deck.id]: deck
     })
   );
 }
@@ -100,11 +100,11 @@ export function getQuestions() {
  * @param {Object} object Current Question Object to add or update with the id
  * @return Promise
  */
-export function submitQuestion({ question, id }) {
+export function submitQuestion(question) {
   return AsyncStorage.mergeItem(
     STORAGE_KEYS.QUESTIONS,
     JSON.stringify({
-      [id]: question
+      [question.id]: question
     })
   );
 }

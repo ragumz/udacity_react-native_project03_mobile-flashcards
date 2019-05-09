@@ -16,11 +16,11 @@ export function handleInitialData() {
     ).then(() => {
         return getQuestions()
                 .then(questions => dispatch(receiveQuestions(questions)))
-    }).catch(error => {
-        dispatch(showMessage('ERROR', 'Failed to load data from storage.', error));
-    }).finally(() => {
+    }).catch(error =>
+        dispatch(showMessage('ERROR', 'Failed to load data from storage.', error))
+    ).finally(() =>
       dispatch(hideLoading())
-    });
+    );
   };
 }
 

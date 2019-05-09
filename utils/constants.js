@@ -17,5 +17,26 @@ export const COLORS = Object.freeze({
   ORANGE: '#f26f28',
   PURPLE: '#292477',
   LIGHT_PURPlE: '#7c53c3',
-  PINK: '#b93fb3'
+  PINK: '#b93fb3',
+  BLACK: '#000000',
+});
+
+/**
+ * @description Empty Deck freezed object
+ */
+export const EMTPY_DECK = Object.freeze({
+  id: '',
+  title: '',
+  created: null,
+});
+
+/**
+ * @description Empty Question freezed object
+ */
+export const EMTPY_QUESTION = Object.freeze({
+  id: '',
+  deck: '',
+  question: '',
+  answer: '',
+  created: null,
 });

@@ -20,7 +20,7 @@ class DeckItem extends Component {
   }
 
   render() {
-    const { deck, questionsCount, doNavigate, navigation } = this.props;
+    const { deck, questionsCount, doNavigate, navigation, viewStyle } = this.props;
     if (commons.isNull(deck)) {
       showAlert('WARNING','Select a valid Deck.');
       navigation.goBack();
@@ -30,7 +30,11 @@ class DeckItem extends Component {
     if (!commons.isNull(questionsCount)) {
       qcount = questionsCount;
     }
-    const mainStyle = doNavigate ? styles.card : styles.empty;
+    let propStyle = viewStyle
+    if (commons.isNull(propStyle)) {
+      propStyle = styles.empty;
+    }
+    const mainStyle = doNavigate ? styles.card : propStyle;
     return (
       <TouchableWithoutFeedback onPress={() => this.navigateToDeck()}>
         <View style={mainStyle} >
@@ -50,7 +54,7 @@ class DeckItem extends Component {
 /**
  * @description Extract component's props data from Redux state and props args into one object.
  */
-function mapStateToProps({ questions }, { deck, doNavigate }) {
+function mapStateToProps({ questions }, { deck, doNavigate, viewStyle }) {
   let questionsCount = 0;
   if (!commons.isNull(deck)) {
     questionsCount = Object.values(questions).filter(question => question.deck === deck.id).length;
@@ -58,7 +62,8 @@ function mapStateToProps({ questions }, { deck, doNavigate }) {
   return {
     deck,
     questionsCount,
-    doNavigate
+    doNavigate,
+    viewStyle
   };
 }
 
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     margin: 10,
     padding: 10,
-    width: "95%",
+    width: '95%',
     alignItems: 'center',
   },
   title: {

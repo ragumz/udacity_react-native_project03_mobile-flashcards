@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { View, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import * as commons from '../utils/commons';
 import DeckItem from './DeckItem';
 import CustomButton from '../common/CustomButton';
@@ -19,14 +19,16 @@ class DeckDetail extends Component {
   render() {
     const { deck } = this.props;
     return (
-      <View>
+      <View style={styles.detail}>
         <DeckItem deck={deck} doNavigate={false} />
-        <CustomButton>
-          Add Card
-        </CustomButton>
-        <CustomButton>
-          Start Quiz
-        </CustomButton>
+        <View>
+          <CustomButton style={[{marginBottom: 10}, styles.button]}>
+            Add Card
+          </CustomButton>
+          <CustomButton style={styles.button}>
+            Start Quiz
+          </CustomButton>
+        </View>
       </View>
     );
   }
@@ -38,11 +40,8 @@ class DeckDetail extends Component {
 function mapStateToProps({ decks, questions }, { navigation }) {
   let deck = null;
   let deckQuestions = null;
-  if (!commons.isEmpty(navigation)
-      && !commons.isNull(navigation.state)
-      && !commons.isNull(navigation.state.params)
-      && !commons.isNull(navigation.state.params.deckId)) {
-    const { deckId } = navigation.state.params;
+  let deckId = commons.getNavigationParam(navigation, 'deckId');
+  if (!commons.isEmpty(deckId)) {
     deck = decks[deckId];
     deckQuestions = Object.values(questions).filter(question => question.decks === deckId);
   }
@@ -54,3 +53,16 @@ function mapStateToProps({ decks, questions }, { navigation }) {
 }
 
 export default withNavigation(connect(mapStateToProps)(DeckDetail));
+
+const styles = StyleSheet.create({
+  detail: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  button: {
+    width: 150,
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
+});

@@ -29,12 +29,12 @@ const RouteConfigs = {
   },
   NewDeck: {
     screen: DeckEdit,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       tabBarLabel: 'New Deck',
       tabBarIcon: ({ tintColor }) => (
         <MaterialIcons name="library-add" size={25} color={tintColor} />
       )
-    }
+    })
   }
 };
 
@@ -75,6 +75,15 @@ const MainNavigator = createAppContainer(
     },
     DeckDetail: {
       screen: DeckDetail,
+      navigationOptions: ({ navigation }) => ({
+        headerTintColor: COLORS.WHITE,
+        headerStyle: {
+          backgroundColor: COLORS.BLUE
+        }
+      })
+    },
+    DeckEdit: {
+      screen: DeckEdit,
       navigationOptions: ({ navigation }) => ({
         headerTintColor: COLORS.WHITE,
         headerStyle: {

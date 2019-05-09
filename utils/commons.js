@@ -89,7 +89,24 @@ export function stringToHslColor(str, s, l) {
   for (var i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
-
   var h = hash % 360;
   return 'hsl('+h+', '+s+'%, '+l+'%)';
+}
+
+/**
+ * @description Get a param from a navigation object
+ *
+ * @param {*} navigation
+ * @param {*} paramName
+ */
+export function getNavigationParam(navigation, paramName) {
+  let paramValue = null;
+  if (!isEmpty(paramName)
+      && !isEmpty(navigation)
+      && !isNull(navigation.state)
+      && !isNull(navigation.state.params)
+      && !isEmpty(navigation.state.params[paramName])) {
+    paramValue = navigation.state.params[paramName];
+  }
+  return paramValue;
 }
