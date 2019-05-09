@@ -35,15 +35,15 @@ class DeckEdit extends Component {
 
   isCreateMode = () => {
     return commons.isEmpty(this.props.deck.id);
-  }
+  };
 
   /**
    * @description Component handle function to update an editing Deck field value with input events from user
    */
   handleChangeValue = (event, name) => {
-    const { value } = event.target;
+    const { text } = event.nativeEvent;
     this.setState(currState => {
-      currState.editDeck[name] = value;
+      currState.editDeck[name] = text;
       return currState;
     });
   };
@@ -64,19 +64,19 @@ class DeckEdit extends Component {
       this.setState({titleFieldValidation: ''});
     }
     return isValid;
-  }
+  };
 
   checkNotExistingId = () => {
     const { decks } = this.props;
     const { editDeck } = this.state;
-    const newId = editDeck['id'];
-    if (commons.isNull(decks[newId])) {
+    const newId = editDeck.id;
+    if (!commons.isNull(decks[newId])) {
       this.setState({idFieldValidation: 'Identifier already exists.'});
       return false;
     }
     this.setState({idFieldValidation: ''});
     return true;
-  }
+  };
 
   /**
    * @description Component handle function to manage Deck creation or update
@@ -128,7 +128,7 @@ class DeckEdit extends Component {
     if (commons.isNull(deck.id)) {
       editDeck = Object.assign({}, constants.EMTPY_DECK);
     }
-  }
+  };
 
   /**
    * @description Lifecycle function to initialize component inner state controls
@@ -136,7 +136,7 @@ class DeckEdit extends Component {
   componentDidMount() {
     let { editDeck } = this.state;
     const { deck } = this.props;
-    if (!commons.isNull(deck)) {
+    if (!commons.isNull(deck.id)) {
       //edit existing Deck
       editDeck = Object.assign({}, deck);
     }
