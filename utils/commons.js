@@ -45,7 +45,7 @@ export const arrayToIndexedObject = (arrObjects = [], fieldKey = 'id') => {
  * @param {number} timestamp The seconds epoch value representing the date
  * @return A string with time and date
  */
-export function formatDate(timestamp) {
+export const formatDate = (timestamp) => {
   if (isEmpty(timestamp))
     return '';
   const d = new Date(timestamp);
@@ -59,7 +59,7 @@ export function formatDate(timestamp) {
  *
  * @return A string with time and date
  */
-export function generateUID() {
+export const generateUID = () => {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
@@ -69,11 +69,71 @@ export function generateUID() {
  *
  * @return MessageDialog component init prop.
  */
-export function createDeleteMessage(entityName, handleDeleteYes, handleDeleteNo, toAppendText='') {
+export const createDeleteMessage = (entityName, handleDeleteYes, handleDeleteNo, toAppendText='') => {
   let userMessage = {title: "QUESTION", message: `Do you confirm to permanently delete this ${entityName}${toAppendText}? No recover is available.`};
   let messageButtons = [{ text: 'Yes', handleClick: handleDeleteYes },
                         { text: 'No',  handleClick: handleDeleteNo }];
   return { userMessage, messageButtons};
+}
+
+/**
+ * Create a text with a message and optional error content
+ * to show in an alert modal dialog to the user
+ *
+ * @param {Object} userMessage An object containing title, message, error and buttons fields
+ */
+export const joinMessageText = (message='', error='') => {
+  let errorMessage = '';
+  if (!isEmpty(error)) {
+    errorMessage += '\n [ERROR] ';
+    if (error.hasOwnProperty('stack')) {
+      errorMessage += error.stack;
+    } else {
+      errorMessage += error;
+    }
+    console.error(errorMessage);
+  }
+  return `${message} ${errorMessage}`
+}
+
+
+/**
+ * @description Extract an UserMessage object from arguments
+ *
+ * @param {*} title The alert dialog title
+ * @param {*} message The message to show
+ * @param {*} error Optional. Error instance
+ */
+export const getUserMessage = (title='INFORMATION', message='', error, buttons=[{text: 'OK'}]) => {
+  return {
+    title,
+    message,
+    error,
+    buttons,
+  };
+}
+
+/**
+ * @description Check if an userMessage must be shown as an Alert on the current component
+ *
+ * @param {*} ownerViewId Current viewing owner name/id owning the message
+ * @param {*} userMessage shared reducer UserMessage state object
+ */
+export const canShowAlert = (ownerViewId, userMessage) => {
+  return !isEmpty(ownerViewId) && !isNull(userMessage)
+    && ownerViewId === userMessage.ownerViewId
+    && userMessage.empty === false;
+}
+/**
+ * @description Check if an userMessage must be shown as an Alert on the current component
+ *
+ * @param {*} ownerViewId Current viewing owner name/id owning the message
+ * @param {*} loading shared reducer Loading state object
+ */
+export const canShowLoading = (ownerViewId, loading) => {
+  return !isEmpty(ownerViewId) && !isNull(loading)
+    && ownerViewId === loading.ownerViewId
+    && loading.active === true;
 }
 
 /**
@@ -84,7 +144,7 @@ export function createDeleteMessage(entityName, handleDeleteYes, handleDeleteNo,
  * @param {*} s a number between 0 and 100
  * @param {*} l  a number between 0 and 100
  */
-export function stringToHslColor(str, s, l) {
+export const stringToHslColor = (str, s, l) => {
   var hash = 0;
   for (var i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -99,7 +159,7 @@ export function stringToHslColor(str, s, l) {
  * @param {*} navigation
  * @param {*} paramName
  */
-export function getNavigationParam(navigation, paramName) {
+export const getNavigationParam = (navigation, paramName) => {
   let paramValue = null;
   if (!isEmpty(paramName)
       && !isEmpty(navigation)

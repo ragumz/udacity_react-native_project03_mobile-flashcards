@@ -7,19 +7,21 @@ import * as commons from '../utils/commons';
 
 /**
  * @description Global function to load all known objects of Questions and Decks from storage.
+ *
+ *
  */
-export function handleInitialData() {
+export function handleInitialData(ownerViewId) {
   return dispatch => {
-    dispatch(showLoading());
+    dispatch(showLoading(ownerViewId));
     return getDecks()
             .then(decks => dispatch(receiveDecks(decks))
     ).then(() => {
         return getQuestions()
                 .then(questions => dispatch(receiveQuestions(questions)))
     }).catch(error =>
-        dispatch(showMessage('ERROR', 'Failed to load data from storage.', error))
+        dispatch(showMessage(ownerViewId, 'ERROR', 'Failed to load data from storage.', error))
     ).finally(() =>
-      dispatch(hideLoading())
+      dispatch(hideLoading(ownerViewId))
     );
   };
 }
@@ -30,20 +32,10 @@ export function handleInitialData() {
  * @param {Object} userMessage An object containing title, message, error and buttons fields
  */
 export function showAlert({title='INFORMATION', message, error='', buttons=[]}) {
-  let errorMessage = '';
-  if (!commons.isEmpty(error)) {
-    errorMessage += '   [ERROR] ';
-    if (error.hasOwnProperty('stack')) {
-      errorMessage += error.stack;
-    } else {
-      errorMessage += error;
-    }
-    console.error(errorMessage);
-  }
   // Works on both iOS and Android
   Alert.alert(
     title,
-    `${message} ${errorMessage}`,
+    commons.joinMessageText(message, error),
     buttons,
     { cancelable: false }
   );

@@ -11,11 +11,7 @@ class DeckList extends Component {
   render() {
     const { decks } = this.props;
     if (commons.isEmpty(decks)) {
-      return showAlert(
-        Object.assign({}, {title: 'INFORMATION', message: 'There are no Decks, please, create new ones.'}, {
-          buttons: [{ text: 'OK' }]
-        })
-      );
+      showAlert(commons.getUserMessage('INFORMATION', 'There are no Decks, please, create new ones.', null, [{ text: 'OK' }]));
     }
     return (
       <ScrollView style={styles.list}>

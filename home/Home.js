@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AppLoading } from 'expo';
 import { handleInitialData, showAlert } from '../common/sharedOperations';
 import { hideMessage } from '../common/sharedActions';
-import { StyleSheet, View } from 'react-native';
-import * as commons from '../utils/commons';
+import { View } from 'react-native';
 import DeckList from '../deck/DeckList';
+import { OWNER_VIEWS } from '../utils/constants';
+import * as commons from '../utils/commons';
+//import { clearStorage } from '../utils/api';
 
 /**
  * @description Home page React Component with all categories and posts lists
  */
-class Home extends React.Component {
+class Home extends Component {
   /**
    * @description Lifecycle function to initialize application state
    */
   componentDidMount() {
+    //    console.log('Removing all data...');
+    //    clearStorage();
     console.log('Loading data...');
-    this.props.dispatch(handleInitialData());
+    this.props.dispatch(handleInitialData(OWNER_VIEWS.HOME));
   }
 
   /**
@@ -24,18 +28,18 @@ class Home extends React.Component {
    */
   render() {
     const { loading, userMessage, dispatch } = this.props;
-    if (loading === true) {
+    if (commons.canShowLoading(OWNER_VIEWS.HOME, loading)) {
       return <AppLoading />;
     }
-    if (!commons.isNull(userMessage)) {
-      return showAlert(
+    if (commons.canShowAlert(OWNER_VIEWS.HOME, userMessage)) {
+      showAlert(
         Object.assign({}, userMessage, {
-          buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage) }]
+          buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(OWNER_VIEWS.HOME)) }]
         })
       );
     }
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <DeckList />
       </View>
     );
@@ -55,4 +59,3 @@ function mapStateToProps({ shared }) {
 }
 
 export default connect(mapStateToProps)(Home);
-

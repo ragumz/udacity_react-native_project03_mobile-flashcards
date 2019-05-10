@@ -40,3 +40,11 @@ export const EMTPY_QUESTION = Object.freeze({
   answer: '',
   created: null,
 });
+
+/**
+ * @description Constant with component ids to restrict actions and behavior on screen
+ */
+export const OWNER_VIEWS = Object.freeze({
+  HOME: 'Home',
+  DECK_EDIT: 'DeckEdit',
+})

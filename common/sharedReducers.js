@@ -11,28 +11,28 @@ export default function common(state = {}, action) {
     case SHARED_ACTIONS.SHOW_MESSAGE:
       return {
         ...state,
-        userMessage: { title: action.title, message: action.message, error: action.error }
+        userMessage: { ownerViewId: action.ownerViewId, empty: false, title: action.title, message: action.message, error: action.error }
       };
 
     //clear an user message and close a dialog window
     case SHARED_ACTIONS.HIDE_MESSAGE:
       return {
         ...state,
-        userMessage: null
+        userMessage: { ownerViewId: action.ownerViewId, empty: true }
       };
 
     //set loading show view flag
     case SHARED_ACTIONS.SHOW_LOADING:
       return {
         ...state,
-        loading: true
+        loading: { ownerViewId: action.ownerViewId, active: true }
       };
 
     //set loading hide view flag
     case SHARED_ACTIONS.HIDE_LOADING:
       return {
         ...state,
-        loading: false
+        loading: { ownerViewId: action.ownerViewId, active: false }
       };
 
     default:

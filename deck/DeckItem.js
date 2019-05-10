@@ -22,7 +22,7 @@ class DeckItem extends Component {
   render() {
     const { deck, questionsCount, doNavigate, navigation, viewStyle } = this.props;
     if (commons.isNull(deck)) {
-      showAlert('WARNING','Select a valid Deck.');
+      showAlert(commons.getUserMessage('WARNING','Select a valid Deck.'));
       navigation.goBack();
       return <View></View>
     }

@@ -2,6 +2,13 @@ import { AsyncStorage } from 'react-native';
 import { STORAGE_KEYS } from './constants';
 
 /**
+ * @description Clear all stored data
+ */
+export function clearStorage() {
+  AsyncStorage.clear();
+}
+
+/**
  * @description Load all stored decks
  *
  * @return Promise with an Object which keys are the decks' ids
@@ -48,9 +55,13 @@ export function removeDeck(id) {
  */
 function loadStorageDecks(results) {
   if (results === null) {
-    return getDefaultDecks();
+    //start with an initial database
+    defaulDecks = getDefaultDecks();
+    Object.values(defaulDecks).map(deck => submitDeck(deck));
+    return defaulDecks;
   } else {
-    return JSON.parse(resuts);
+    //load database from storage
+    return JSON.parse(results);
   }
 }
 
@@ -148,9 +159,13 @@ export function removeQuestionsFromDeck(deckId) {
  */
 function loadStorageQuestions(results) {
   if (results === null) {
-    return getDefaultQuestions();
+    //start with an initial database
+    let defaulQuestions = getDefaultQuestions();
+    Object.values(defaulQuestions).map(question => submitQuestion(question));
+    return defaulQuestions;
   } else {
-    return JSON.parse(resuts);
+    //load database from storage
+    return JSON.parse(results);
   }
 }
 
@@ -165,6 +180,7 @@ function getDefaultQuestions() {
       deck: 'react',
       question: 'What is React?',
       answer: 'A library for managing user interfaces',
+      difficulty: 1,
       created: date,
     },
     a17b8cd49032: {
@@ -172,6 +188,7 @@ function getDefaultQuestions() {
       deck: 'react',
       question: 'Where do you make Ajax requests in React?',
       answer: 'The componentDidMount lifecycle event',
+      difficulty: 2,
       created: date,
     },
     d64bf17a043: {
@@ -179,6 +196,7 @@ function getDefaultQuestions() {
       deck: 'reactnative',
       question: 'What is Expo?',
       answer: 'A service that makes React Native development a lot easy',
+      difficulty: 5,
       created: date,
     },
     b94fbcf39105: {
@@ -186,6 +204,7 @@ function getDefaultQuestions() {
       deck: 'reactnative',
       question: 'What are the two most used graphic components?',
       answer: 'View and Text',
+      difficulty: 3,
       created: date,
     },
     '12a75cd9084b': {
@@ -193,6 +212,7 @@ function getDefaultQuestions() {
       deck: 'reactredux',
       question: 'What is a State Tree?',
       answer: 'The single place where all data are stored',
+      difficulty: 6,
       created: date,
     },
     '985fc03b6a38': {
@@ -200,6 +220,7 @@ function getDefaultQuestions() {
       deck: 'reactredux',
       question: 'What kind of functions are required to update Redux state?',
       answer: 'Pure functions',
+      difficulty: 8,
       created: date,
     },
     '8b9f0291526c': {
@@ -207,6 +228,7 @@ function getDefaultQuestions() {
       deck: 'javascript',
       question: 'What is JavaScript?',
       answer: 'The Programming Language for the Web',
+      difficulty: 1,
       created: date,
     },
     '63524f3c2a16': {
@@ -214,6 +236,7 @@ function getDefaultQuestions() {
       deck: 'javascript',
       question: 'What does JavaScript change and manipulate?',
       answer: 'HTML, CSS and data',
+      difficulty: 2,
       created: date,
     }
   };

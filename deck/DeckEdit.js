@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import { AppLoading } from 'expo';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
 import CustomButton from '../common/CustomButton';
-import {handleAddNewDeck, handleUpdateDeck} from './deckOperations';
+import { handleAddNewDeck, handleUpdateDeck } from './deckOperations';
 import { hideMessage } from '../common/sharedActions';
+import { showAlert } from '../common/sharedOperations';
 
 /**
  * @description React component to create a new or edit an existing Deck.
@@ -99,13 +100,14 @@ class DeckEdit extends Component {
     this.setState(currState => {
       currState.editDeck['created'] = new Date();
       return currState;
+    }, () => {
+      const { editDeck } = this.state;
+      const { dispatch } = this.props;
+      dispatch(handleAddNewDeck(constants.OWNER_VIEWS.DECK_EDIT, editDeck))
+        .then(() =>
+          this.handleFinishedEdit()
+        );
     });
-    const { editDeck } = this.state;
-    const { dispatch } = this.props;
-    dispatch(handleAddNewDeck(editDeck))
-      .then(() =>
-        this.handleFinishedEdit()
-      );
   };
 
   /**
@@ -114,7 +116,7 @@ class DeckEdit extends Component {
   handleClickUpdateDeck = () => {
     const { editDeck } = this.state;
     const { dispatch } = this.props;
-    dispatch(handleUpdateDeck(editDeck))
+    dispatch(handleUpdateDeck(constants.OWNER_VIEWS.DECK_EDIT, editDeck))
       .then(() =>
         this.handleFinishedEdit()
       );
@@ -124,9 +126,9 @@ class DeckEdit extends Component {
    * @description Component handle function when user end a Deck edition, saving it or not.
    */
   handleFinishedEdit = () => {
-    const { deck } = this.props;
-    if (commons.isNull(deck.id)) {
-      editDeck = Object.assign({}, constants.EMTPY_DECK);
+    if (this.isCreateMode()) {
+      //start a new Deck after created
+      this.setState({ editDeck: Object.assign({}, constants.EMTPY_DECK) });
     }
   };
 
@@ -156,16 +158,16 @@ class DeckEdit extends Component {
   }
 
   render() {
-    const { deck, loading, userMessage, dispatch } = this.props;
-    if (loading === true) {
+    const { loading, userMessage, dispatch } = this.props;
+    if (commons.canShowLoading(constants.OWNER_VIEWS.DECK_EDIT, loading)) {
       //show loading
       return <AppLoading />;
     }
-    if (!commons.isNull(userMessage)) {
+    if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_EDIT, userMessage)) {
       //show error/success alert modal dialog
-      return showAlert(
+      showAlert(
         Object.assign({}, userMessage, {
-          buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage) }]
+          buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(constants.OWNER_VIEWS.DECK_EDIT)) }]
         })
       );
     }
@@ -180,7 +182,6 @@ class DeckEdit extends Component {
             id="id"
             placeholder="Identifier"
             value={id}
-            autoFocus={isCreate}
             editable={isCreate}
             maxLength={50}
             underlineColorAndroid={constants.COLORS.BLACK}
