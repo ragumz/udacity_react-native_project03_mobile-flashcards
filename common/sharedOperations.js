@@ -1,12 +1,12 @@
 import { Alert } from 'react-native';
 import { receiveDecks } from '../deck/deckActions';
-import { receiveQuestions } from '../question/questionActions';
+import { receiveCards } from '../card/cardActions';
 import { showMessage, showLoading, hideLoading } from './sharedActions';
-import { getDecks, getQuestions } from '../utils/api';
+import { getDecks, getCards } from '../utils/api';
 import * as commons from '../utils/commons';
 
 /**
- * @description Global function to load all known objects of Questions and Decks from storage.
+ * @description Global function to load all known objects of Cards and Decks from storage.
  *
  *
  */
@@ -16,8 +16,8 @@ export function handleInitialData(ownerViewId) {
     return getDecks()
             .then(decks => dispatch(receiveDecks(decks))
     ).then(() => {
-        return getQuestions()
-                .then(questions => dispatch(receiveQuestions(questions)))
+        return getCards()
+                .then(cards => dispatch(receiveCards(cards)))
     }).catch(error =>
         dispatch(showMessage(ownerViewId, 'ERROR', 'Failed to load data from storage.', error))
     ).finally(() =>

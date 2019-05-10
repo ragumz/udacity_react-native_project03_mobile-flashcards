@@ -37,17 +37,17 @@ class DeckDetail extends Component {
 /**
  * @description Extract component's props data from Redux state and props args into one object.
  */
-function mapStateToProps({ decks, questions }, { navigation }) {
+function mapStateToProps({ decks, cards }, { navigation }) {
   let deck = null;
-  let deckQuestions = null;
+  let deckCards = null;
   let deckId = commons.getNavigationParam(navigation, 'deckId');
   if (!commons.isEmpty(deckId)) {
     deck = decks[deckId];
-    deckQuestions = Object.values(questions).filter(question => question.decks === deckId);
+    deckCards = Object.values(cards).filter(card => card.decks === deckId);
   }
   return {
     deck,
-    questions: deckQuestions,
+    cards: deckCards,
     navigation,
   };
 }

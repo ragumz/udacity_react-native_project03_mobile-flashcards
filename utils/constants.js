@@ -3,7 +3,7 @@
  */
 export const STORAGE_KEYS = Object.freeze({
   DECKS: 'Flashcards:decks',
-  QUESTIONS: 'Flashcards:questions'
+  CARDS: 'Flashcards:cards'
 });
 
 /**
@@ -27,17 +27,21 @@ export const COLORS = Object.freeze({
 export const EMTPY_DECK = Object.freeze({
   id: '',
   title: '',
+  quizCount: 0,
   created: null,
 });
 
 /**
- * @description Empty Question freezed object
+ * @description Empty Card freezed object
  */
-export const EMTPY_QUESTION = Object.freeze({
+export const EMTPY_CARD = Object.freeze({
   id: '',
   deck: '',
   question: '',
   answer: '',
+  difficulty: 0,
+  correctCount: 0,
+  incorrectCount: 0,
   created: null,
 });
 

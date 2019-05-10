@@ -30,8 +30,7 @@ class DeckEdit extends Component {
   state = {
     /** @description Edited/Viewed Deck object */
     editDeck: Object.assign({}, constants.EMTPY_DECK),
-    idFieldValidation: '',
-    titleFieldValidation: '',
+    fieldValidation: {},
   };
 
   isCreateMode = () => {
@@ -53,16 +52,16 @@ class DeckEdit extends Component {
     const { editDeck } = this.state;
     let isValid = true;
     if (commons.isEmpty(editDeck.id)) {
-      this.setState({idFieldValidation: 'Identifier is required.'});
+      this.setState(currState => { currState.fieldValidation['id'] = 'Identifier is required.'; return currState });
       isValid = false;
     } else {
-      this.setState({idFieldValidation: ''});
+      this.setState(currState => { currState.fieldValidation['id'] = ''; return currState });
     }
     if (commons.isEmpty(editDeck.title)) {
-      this.setState({titleFieldValidation: 'Title is required.'});
+      this.setState(currState => { currState.fieldValidation['title'] = 'Title is required.'; return currState });
       isValid = false;
     } else {
-      this.setState({titleFieldValidation: ''});
+      this.setState(currState => { currState.fieldValidation['title'] = ''; return currState });
     }
     return isValid;
   };
@@ -72,10 +71,10 @@ class DeckEdit extends Component {
     const { editDeck } = this.state;
     const newId = editDeck.id;
     if (!commons.isNull(decks[newId])) {
-      this.setState({idFieldValidation: 'Identifier already exists.'});
+      this.setState(currState => { currState.fieldValidation['id'] = 'Identifier already exists in another Deck.'; return currState });
       return false;
     }
-    this.setState({idFieldValidation: ''});
+    this.setState(currState => { currState.fieldValidation['id'] = ''; return currState });
     return true;
   };
 
@@ -99,6 +98,7 @@ class DeckEdit extends Component {
   handleClickCreateDeck = () => {
     this.setState(currState => {
       currState.editDeck['created'] = new Date();
+      currState.editDeck['quizCount'] = 0;
       return currState;
     }, () => {
       const { editDeck } = this.state;
@@ -171,7 +171,7 @@ class DeckEdit extends Component {
         })
       );
     }
-    const { editDeck, idFieldValidation, titleFieldValidation } = this.state;
+    const { editDeck, fieldValidation } = this.state;
     const { id, title } = editDeck;
     const isCreate = this.isCreateMode();
     return (
@@ -180,20 +180,20 @@ class DeckEdit extends Component {
           <TextInput
             style={styles.input}
             id="id"
-            placeholder="Identifier"
+            placeholder="Deck Identifier"
             value={id}
             editable={isCreate}
             maxLength={50}
             underlineColorAndroid={constants.COLORS.BLACK}
             onChange={event => this.handleChangeValue(event, 'id')}
           />
-          {!commons.isEmpty(idFieldValidation) && (
-            <Text style={{ color: "red" }}>{idFieldValidation}</Text>
+          {!commons.isEmpty(fieldValidation.id) && (
+            <Text style={{ color: "red" }}>{fieldValidation.id}</Text>
           )}
           <TextInput
-            style={styles.input}
+            style={[styles.input, {width: 300}]}
             id="title"
-            placeholder="Title"
+            placeholder="Deck Title"
             value={title}
             autoFocus={!isCreate}
             maxLength={200}
@@ -201,8 +201,8 @@ class DeckEdit extends Component {
             underlineColorAndroid={constants.COLORS.BLACK}
             onChange={event => this.handleChangeValue(event, 'title')}
           />
-          {!commons.isEmpty(titleFieldValidation) && (
-            <Text style={{ color: "red" }}>{titleFieldValidation}</Text>
+          {!commons.isEmpty(fieldValidation.title) && (
+            <Text style={{ color: "red" }}>{fieldValidation.title}</Text>
           )}
         </View>
         <View style={styles.main}>
@@ -218,7 +218,6 @@ class DeckEdit extends Component {
       </View>
     );
   }
-
 }
 
 /**
@@ -255,6 +254,7 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 50,
     fontSize: 18,
+    width: 200,
   },
   button: {
     width: 150,

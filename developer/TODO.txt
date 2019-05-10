@@ -9,18 +9,18 @@ Design Views
 	OK Deck List
 	OK Deck Detail
   OK Deck Edit
-	Add Question
+	Add Card
   Quiz
 Bonus
-  Question List
+  Card List
   Edit Deck
   Delete Deck
-  Edit Question
-  Delete Question
+  Edit Card
+  Delete Card
   Sort Deck Title/Cards
 OK Create folders
 	OK deck
-	OK question
+	OK card
 	OK home
 	OK middleware
 	OK shared
@@ -37,12 +37,12 @@ Implement Views
   OK Deck Edit
     OK Test persistence
     OK Test Alerts
-	Question Edit
-  Question Quiz
+	Card Edit
+  Card Quiz
 
 Review Animation
 
-OK Generate more decks and questions default fixed data
+OK Generate more decks and cards default fixed data
 
 Add documentation and comments to source code
 

@@ -20,15 +20,15 @@ class DeckItem extends Component {
   }
 
   render() {
-    const { deck, questionsCount, doNavigate, navigation, viewStyle } = this.props;
+    const { deck, cardsCount, doNavigate, navigation, viewStyle } = this.props;
     if (commons.isNull(deck)) {
       showAlert(commons.getUserMessage('WARNING','Select a valid Deck.'));
       navigation.goBack();
       return <View></View>
     }
     let qcount = 0;
-    if (!commons.isNull(questionsCount)) {
-      qcount = questionsCount;
+    if (!commons.isNull(cardsCount)) {
+      qcount = cardsCount;
     }
     let propStyle = viewStyle
     if (commons.isNull(propStyle)) {
@@ -54,14 +54,14 @@ class DeckItem extends Component {
 /**
  * @description Extract component's props data from Redux state and props args into one object.
  */
-function mapStateToProps({ questions }, { deck, doNavigate, viewStyle }) {
-  let questionsCount = 0;
+function mapStateToProps({ cards }, { deck, doNavigate, viewStyle }) {
+  let cardsCount = 0;
   if (!commons.isNull(deck)) {
-    questionsCount = Object.values(questions).filter(question => question.deck === deck.id).length;
+    cardsCount = Object.values(cards).filter(card => card.deck === deck.id).length;
   }
   return {
     deck,
-    questionsCount,
+    cardsCount,
     doNavigate,
     viewStyle
   };

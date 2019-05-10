@@ -74,95 +74,99 @@ function getDefaultDecks() {
     react: {
       id: 'react',
       title: 'React',
+      quizCount: 0,
       created: date,
     },
     reactnative: {
       id: 'reactnative',
       title: 'React Native',
+      quizCount: 0,
       created: date,
     },
     reactredux: {
       id: 'reactredux',
       title: 'React Redux',
+      quizCount: 0,
       created: date,
     },
     javascript: {
       id: 'javascript',
       title: 'JavaScript',
+      quizCount: 0,
       created: date,
     }
   };
 }
 
 /**
- * @description Load all stored questions
+ * @description Load all stored Cards Objects
  *
- * @return Promise with an Object which keys are the questions' ids
+ * @return Promise with an Object which keys are the Cards' ids
  */
-export function getQuestions() {
-  return AsyncStorage.getItem(STORAGE_KEYS.QUESTIONS).then(
-    loadStorageQuestions
+export function getCards() {
+  return AsyncStorage.getItem(STORAGE_KEYS.CARDS).then(
+    loadStorageCards
   );
 }
 
 /**
- * @description Submit a new or existing Question object to storage
+ * @description Submit a new or existing Card object to storage
  *
- * @param {Object} object Current Question Object to add or update with the id
+ * @param {Object} card Current Card Object to add or update with the id
  * @return Promise
  */
-export function submitQuestion(question) {
+export function submitCard(card) {
   return AsyncStorage.mergeItem(
-    STORAGE_KEYS.QUESTIONS,
+    STORAGE_KEYS.CARDS,
     JSON.stringify({
-      [question.id]: question
+      [card.id]: card
     })
   );
 }
 
 /**
- * @description Remove an existing Question Object by its id from storage
+ * @description Remove an existing Card Object by its id from storage
  *
- * @param {String} id Question identifier
+ * @param {String} id Card identifier
  * @return Promise
  */
-export function removeQuestion(id) {
-  return AsyncStorage.removeItem(STORAGE_KEYS.QUESTIONS).then(results => {
+export function removeCard(id) {
+  return AsyncStorage.removeItem(STORAGE_KEYS.CARDS).then(results => {
     const data = JSON.parse(results);
     data[id] = undefined;
     delete data[id];
-    AsyncStorage.setItem(STORAGE_KEYS.QUESTIONS, JSON.stringify(data));
+    AsyncStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(data));
   });
 }
 
 /**
- * @description Remove all existing Question Objects by parent Deck id from storage
+ * @description Remove all existing Card Objects by parent Deck id from storage
  *
  * @param {String} deckId Parent Deck identifier
  * @return Promise
  */
-export function removeQuestionsFromDeck(deckId) {
-  return AsyncStorage.removeItem(STORAGE_KEYS.QUESTIONS).then(results => {
+export function removeCardsFromDeck(deckId) {
+  return AsyncStorage.removeItem(STORAGE_KEYS.CARDS).then(results => {
     const data = JSON.parse(results);
     const newData = arrayToIndexedObject(
-      Object.values(data).filter(question => question.deck !== deckId)
+      Object.values(data).filter(card => card.deck !== deckId)
     );
-    AsyncStorage.setItem(STORAGE_KEYS.QUESTIONS, JSON.stringify(newData));
+    AsyncStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(newData));
   });
 }
 
 /**
- * @description Load all existing question Object from the storage
+ * @description Load all existing Cards Objects from the storage
  *
- * @param {String} results JSON serialized Questions
- * @return Object which keys are the questions' ids
+ * @param {String} results JSON serialized Cards
+ * @return Object which keys are the Cards' ids
  */
-function loadStorageQuestions(results) {
+function loadStorageCards(results) {
   if (results === null) {
     //start with an initial database
-    let defaulQuestions = getDefaultQuestions();
-    Object.values(defaulQuestions).map(question => submitQuestion(question));
-    return defaulQuestions;
+    let defaulCards = getDefaultCards();
+    Object.values(defaulCards).map(card => submitCard(card));
+    return defaulCards;
   } else {
     //load database from storage
     return JSON.parse(results);
@@ -170,9 +174,9 @@ function loadStorageQuestions(results) {
 }
 
 /**
- * @description Fixed start default Question Objects.
+ * @description Fixed start default Cards Objects.
  */
-function getDefaultQuestions() {
+function getDefaultCards() {
   const date = new Date();
   return {
     '3a5f43c27b0f': {
@@ -181,6 +185,8 @@ function getDefaultQuestions() {
       question: 'What is React?',
       answer: 'A library for managing user interfaces',
       difficulty: 1,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     a17b8cd49032: {
@@ -189,6 +195,8 @@ function getDefaultQuestions() {
       question: 'Where do you make Ajax requests in React?',
       answer: 'The componentDidMount lifecycle event',
       difficulty: 2,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     d64bf17a043: {
@@ -197,6 +205,8 @@ function getDefaultQuestions() {
       question: 'What is Expo?',
       answer: 'A service that makes React Native development a lot easy',
       difficulty: 5,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     b94fbcf39105: {
@@ -205,6 +215,8 @@ function getDefaultQuestions() {
       question: 'What are the two most used graphic components?',
       answer: 'View and Text',
       difficulty: 3,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     '12a75cd9084b': {
@@ -213,6 +225,8 @@ function getDefaultQuestions() {
       question: 'What is a State Tree?',
       answer: 'The single place where all data are stored',
       difficulty: 6,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     '985fc03b6a38': {
@@ -221,6 +235,8 @@ function getDefaultQuestions() {
       question: 'What kind of functions are required to update Redux state?',
       answer: 'Pure functions',
       difficulty: 8,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     '8b9f0291526c': {
@@ -229,6 +245,8 @@ function getDefaultQuestions() {
       question: 'What is JavaScript?',
       answer: 'The Programming Language for the Web',
       difficulty: 1,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     },
     '63524f3c2a16': {
@@ -237,6 +255,8 @@ function getDefaultQuestions() {
       question: 'What does JavaScript change and manipulate?',
       answer: 'HTML, CSS and data',
       difficulty: 2,
+      correctCount: 0,
+      incorrectCount: 0,
       created: date,
     }
   };

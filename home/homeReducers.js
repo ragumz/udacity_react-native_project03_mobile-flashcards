@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import decks from '../deck/deckReducers'
-import questions from '../question/questionReducers'
+import cards from '../card/cardReducers'
 import shared from '../common/sharedReducers'
 
 /**
@@ -8,6 +8,6 @@ import shared from '../common/sharedReducers'
  */
 export default combineReducers({
   decks,
-  questions,
+  cards,
   shared
 })
