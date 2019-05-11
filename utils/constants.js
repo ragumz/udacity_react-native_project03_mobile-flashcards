@@ -51,4 +51,5 @@ export const EMTPY_CARD = Object.freeze({
 export const OWNER_VIEWS = Object.freeze({
   HOME: 'Home',
   DECK_EDIT: 'DeckEdit',
+  CARD_EDIT: 'CardEdit',
 })

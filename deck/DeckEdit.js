@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import { AppLoading } from 'expo';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
 import CustomButton from '../common/CustomButton';
@@ -15,7 +15,7 @@ import { showAlert } from '../common/sharedOperations';
  */
 class DeckEdit extends Component {
   static navigationOptions = ({ navigation }) => {
-    let deckId = commons.getNavigationParam(navigation, 'deckId');
+    const deckId = commons.getNavigationParam(navigation, 'deckId');
     return {
       title: `${commons.isNull(deckId) ? 'Create Deck' : `Edit Deck ${deckId}`}`,
       headerTitleStyle: {
@@ -98,7 +98,6 @@ class DeckEdit extends Component {
   handleClickCreateDeck = () => {
     this.setState(currState => {
       currState.editDeck['created'] = new Date();
-      currState.editDeck['quizCount'] = 0;
       return currState;
     }, () => {
       const { editDeck } = this.state;
@@ -195,9 +194,7 @@ class DeckEdit extends Component {
             id="title"
             placeholder="Deck Title"
             value={title}
-            autoFocus={!isCreate}
             maxLength={200}
-            scrollEnabled={true}
             underlineColorAndroid={constants.COLORS.BLACK}
             onChange={event => this.handleChangeValue(event, 'title')}
           />

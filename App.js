@@ -3,10 +3,11 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './home/homeReducers';
 import middlewares from './utils/middlewares';
-import { StyleSheet, View, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import Home from './home/Home';
 import DeckEdit from './deck/DeckEdit';
 import DeckDetail from './deck/DeckDetail';
+import CardEdit from './card/CardEdit';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -84,6 +85,15 @@ const MainNavigator = createAppContainer(
     },
     DeckEdit: {
       screen: DeckEdit,
+      navigationOptions: ({ navigation }) => ({
+        headerTintColor: COLORS.WHITE,
+        headerStyle: {
+          backgroundColor: COLORS.BLUE
+        }
+      })
+    },
+    CardEdit: {
+      screen: CardEdit,
       navigationOptions: ({ navigation }) => ({
         headerTintColor: COLORS.WHITE,
         headerStyle: {

@@ -100,9 +100,10 @@ export const joinMessageText = (message='', error='') => {
 /**
  * @description Extract an UserMessage object from arguments
  *
- * @param {*} title The alert dialog title
- * @param {*} message The message to show
- * @param {*} error Optional. Error instance
+ * @param {String} title The alert dialog title
+ * @param {String} message The message to show
+ * @param {Object} error Optional. Error instance or String text
+ * @param {Array} buttons Optional. Array containing objects such as [{text: [buttonTitle], onPress: [function]}]
  */
 export const getUserMessage = (title='INFORMATION', message='', error, buttons=[{text: 'OK'}]) => {
   return {

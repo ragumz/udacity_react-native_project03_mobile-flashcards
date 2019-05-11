@@ -27,7 +27,7 @@ export function receiveCards(cards) {
 export function addNewCard(card) {
   return {
     type: CARD_ACTIONS.CREATE,
-    deck: card
+    card: card
   }
 }
 

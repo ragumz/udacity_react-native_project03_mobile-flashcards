@@ -16,13 +16,23 @@ class DeckDetail extends Component {
       },
     };
   };
+
+  handleAddCardPress = () => {
+    const { deck, navigation } = this.props;
+    navigation.navigate('CardEdit', {
+      deckId: deck.id,
+      deckTitle: deck.title,
+      cardId: null,
+    });
+  }
+
   render() {
     const { deck } = this.props;
     return (
       <View style={styles.detail}>
         <DeckItem deck={deck} doNavigate={false} />
         <View>
-          <CustomButton style={[{marginBottom: 10}, styles.button]}>
+          <CustomButton style={[{marginBottom: 10}, styles.button]} onPress={() => this.handleAddCardPress()}>
             Add Card
           </CustomButton>
           <CustomButton style={styles.button}>

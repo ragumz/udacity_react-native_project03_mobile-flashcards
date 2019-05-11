@@ -9,8 +9,9 @@ Design Views
 	OK Deck List
 	OK Deck Detail
   OK Deck Edit
-	Add Card
-  Quiz
+	Card Edit
+  Card Item
+  Card Quiz
 Bonus
   Card List
   Edit Deck
@@ -18,6 +19,7 @@ Bonus
   Edit Card
   Delete Card
   Sort Deck Title/Cards
+  Show Statistics by Deck/Global
 OK Create folders
 	OK deck
 	OK card
@@ -37,8 +39,11 @@ Implement Views
   OK Deck Edit
     OK Test persistence
     OK Test Alerts
-	Card Edit
+	OK Card Edit
   Card Quiz
+
+Fix Bugs
+  Double Alert shown on iOS Simulator
 
 Review Animation
 
