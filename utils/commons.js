@@ -171,3 +171,13 @@ export const getNavigationParam = (navigation, paramName) => {
   }
   return paramValue;
 }
+
+/**
+ * @description Calculate the difference in miliseconds between two dates
+ *
+ * @param {Date} startDate Started date
+ * @param {Date} endDate End date, must be greater than start date
+ */
+export const getDateMilisDifference = (startDate, endDate) => {
+  return Math.abs(endDate - startDate);
+}

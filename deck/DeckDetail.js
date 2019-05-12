@@ -17,12 +17,20 @@ class DeckDetail extends Component {
     };
   };
 
-  handleAddCardPress = () => {
+  handleAddCard = () => {
     const { deck, navigation } = this.props;
     navigation.navigate('CardEdit', {
       deckId: deck.id,
       deckTitle: deck.title,
       cardId: null,
+    });
+  }
+
+  handleStartQuiz = () => {
+    const { deck, navigation } = this.props;
+    navigation.navigate('DeckCardsQuiz', {
+      deckId: deck.id,
+      deckTitle: deck.title,
     });
   }
 
@@ -32,10 +40,14 @@ class DeckDetail extends Component {
       <View style={styles.detail}>
         <DeckItem deck={deck} doNavigate={false} />
         <View>
-          <CustomButton style={[{marginBottom: 10}, styles.button]} onPress={() => this.handleAddCardPress()}>
+          <CustomButton
+            style={[{marginBottom: 10}, styles.button]}
+            onPress={() => this.handleAddCard()}>
             Add Card
           </CustomButton>
-          <CustomButton style={styles.button}>
+          <CustomButton
+            style={styles.button}
+            onPress={() => this.handleStartQuiz()}>
             Start Quiz
           </CustomButton>
         </View>
@@ -53,7 +65,7 @@ function mapStateToProps({ decks, cards }, { navigation }) {
   let deckId = commons.getNavigationParam(navigation, 'deckId');
   if (!commons.isEmpty(deckId)) {
     deck = decks[deckId];
-    deckCards = Object.values(cards).filter(card => card.decks === deckId);
+    deckCards = Object.values(cards).filter(card => card.deck === deckId);
   }
   return {
     deck,

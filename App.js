@@ -7,6 +7,7 @@ import { View, Platform } from 'react-native';
 import Home from './home/Home';
 import DeckEdit from './deck/DeckEdit';
 import DeckDetail from './deck/DeckDetail';
+import DeckCardsQuiz from './deck/DeckCardsQuiz';
 import CardEdit from './card/CardEdit';
 import {
   createBottomTabNavigator,
@@ -100,7 +101,16 @@ const MainNavigator = createAppContainer(
           backgroundColor: COLORS.BLUE
         }
       })
-    }
+    },
+    DeckCardsQuiz: {
+      screen: DeckCardsQuiz,
+      navigationOptions: ({ navigation }) => ({
+        headerTintColor: COLORS.WHITE,
+        headerStyle: {
+          backgroundColor: COLORS.BLUE
+        }
+      })
+    },
   })
 );
 

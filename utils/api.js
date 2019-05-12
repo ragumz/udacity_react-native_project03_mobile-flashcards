@@ -74,25 +74,25 @@ function getDefaultDecks() {
     react: {
       id: 'react',
       title: 'React',
-      quizCount: 0,
+      quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
       created: date,
     },
     reactnative: {
       id: 'reactnative',
       title: 'React Native',
-      quizCount: 0,
+      quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
       created: date,
     },
     reactredux: {
       id: 'reactredux',
       title: 'React Redux',
-      quizCount: 0,
+      quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
       created: date,
     },
     javascript: {
       id: 'javascript',
       title: 'JavaScript',
-      quizCount: 0,
+      quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
       created: date,
     }
   };
@@ -120,6 +120,21 @@ export function submitCard(card) {
     STORAGE_KEYS.CARDS,
     JSON.stringify({
       [card.id]: card
+    })
+  );
+}
+
+/**
+ * @description Submit a collection of existing Cards object to storage
+ *
+ * @param {Object} cards Current Cards Object with each Card indexed by its ID to be updated
+ * @return Promise
+ */
+export function submitMultiCards(cards) {
+  return AsyncStorage.mergeItem(
+    STORAGE_KEYS.CARDS,
+    JSON.stringify({
+      ...cards
     })
   );
 }
@@ -185,8 +200,7 @@ function getDefaultCards() {
       question: 'What is React?',
       answer: 'A library for managing user interfaces',
       difficulty: 1,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     a17b8cd49032: {
@@ -195,8 +209,7 @@ function getDefaultCards() {
       question: 'Where do you make Ajax requests in React?',
       answer: 'The componentDidMount lifecycle event',
       difficulty: 2,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     d64bf17a043: {
@@ -205,8 +218,7 @@ function getDefaultCards() {
       question: 'What is Expo?',
       answer: 'A service that makes React Native development a lot easy',
       difficulty: 5,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     b94fbcf39105: {
@@ -215,8 +227,7 @@ function getDefaultCards() {
       question: 'What are the two most used graphic components?',
       answer: 'View and Text',
       difficulty: 3,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     '12a75cd9084b': {
@@ -225,8 +236,7 @@ function getDefaultCards() {
       question: 'What is a State Tree?',
       answer: 'The single place where all data are stored',
       difficulty: 6,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     '985fc03b6a38': {
@@ -235,8 +245,7 @@ function getDefaultCards() {
       question: 'What kind of functions are required to update Redux state?',
       answer: 'Pure functions',
       difficulty: 8,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     '8b9f0291526c': {
@@ -245,8 +254,7 @@ function getDefaultCards() {
       question: 'What is JavaScript?',
       answer: 'The Programming Language for the Web',
       difficulty: 1,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     },
     '63524f3c2a16': {
@@ -255,8 +263,7 @@ function getDefaultCards() {
       question: 'What does JavaScript change and manipulate?',
       answer: 'HTML, CSS and data',
       difficulty: 2,
-      correctCount: 0,
-      incorrectCount: 0,
+      quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
       created: date,
     }
   };

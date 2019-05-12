@@ -19,6 +19,8 @@ export const COLORS = Object.freeze({
   LIGHT_PURPlE: '#7c53c3',
   PINK: '#b93fb3',
   BLACK: '#000000',
+  DARK_RED: '#992626',
+  DARDK_GREEN: '#368c35',
 });
 
 /**
@@ -27,8 +29,8 @@ export const COLORS = Object.freeze({
 export const EMTPY_DECK = Object.freeze({
   id: '',
   title: '',
-  quizCount: 0,
   created: null,
+  quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
 });
 
 /**
@@ -40,9 +42,8 @@ export const EMTPY_CARD = Object.freeze({
   question: '',
   answer: '',
   difficulty: 0,
-  correctCount: 0,
-  incorrectCount: 0,
   created: null,
+  quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
 });
 
 /**
@@ -52,4 +53,23 @@ export const OWNER_VIEWS = Object.freeze({
   HOME: 'Home',
   DECK_EDIT: 'DeckEdit',
   CARD_EDIT: 'CardEdit',
+  DECK_QUIZ: 'DeckCardsQuiz',
 })
+
+/**
+ * @description Constants with the Quiz possible answers
+ */
+export const QUIZ_ANSWERS = Object.freeze({
+  CORRECT: Object.freeze({
+    value: 'correct',
+    title: 'Correct',
+    background: COLORS.DARDK_GREEN,
+    foreground: COLORS.WHITE
+  }),
+  INCORRECT: Object.freeze({
+    value: 'incorrect',
+    title: 'Incorrect',
+    background: COLORS.DARK_RED,
+    foreground: COLORS.WHITE
+  })
+});
