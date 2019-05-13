@@ -9,17 +9,19 @@ Design Views
 	OK Deck List
 	OK Deck Detail
   OK Deck Edit
-	Card Edit
-  Card Item
-  Card Quiz
+	OK Card Edit
+  OK Card Item
+  OK Card Quiz
+  Notification
 Bonus
   Card List
   Edit Deck
   Delete Deck
-  Edit Card
+  Edit Card Inline
   Delete Card
   Sort Deck Title/Cards
   Show Statistics by Deck/Global
+
 OK Create folders
 	OK deck
 	OK card
@@ -45,9 +47,11 @@ Implement Views
 Fix Bugs
   Double Alert shown on iOS Simulator
 
-Review Animation
-
 OK Generate more decks and cards default fixed data
+
+Review Layout and UX
+
+Review Animations
 
 Add documentation and comments to source code
 

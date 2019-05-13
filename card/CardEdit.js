@@ -18,7 +18,7 @@ class CardEdit extends Component {
     const deckTitle = commons.getNavigationParam(navigation, 'deckTitle');
     const cardId = commons.getNavigationParam(navigation, 'cardId');
     return {
-      title: `${commons.isNull(cardId) ? `Create Card : Deck ${deckTitle}` : `Edit Card : Deck ${deckTitle}`}`,
+      title: `${commons.isNull(cardId) ? `Create Card : ${deckTitle} Deck` : `Edit Card : ${deckTitle} Deck`}`,
       headerTitleStyle: {
         fontWeight: 'bold',
       },

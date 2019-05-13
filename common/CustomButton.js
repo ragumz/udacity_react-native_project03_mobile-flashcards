@@ -2,12 +2,15 @@ import React from 'react';
 import { Text, TouchableHighlight, StyleSheet, Platform } from 'react-native';
 import { COLORS } from '../utils/constants';
 
-export default function CustomButton({ children, onPress, style = {} }) {
+export default function CustomButton({ children, onPress, style = {}, disabled=false }) {
   return (
     <TouchableHighlight
+      disabled={disabled}
       underlayColor={COLORS.WHITE}
       onPress={onPress}>
-      <Text style={[styles.reset, Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn, style]}>
+      <Text style={[styles.reset, Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn,
+                    style,
+                    disabled ? styles.disabled : styles.enabled ]}>
         {children}
       </Text>
     </TouchableHighlight>
@@ -40,4 +43,10 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
   },
+  disabled: {
+    opacity: 0.5
+  },
+  enabled: {
+    opacity: 1.0
+  }
 });

@@ -17,8 +17,8 @@ class Home extends Component {
    * @description Lifecycle function to initialize application state
    */
   componentDidMount() {
-    //    console.log('Removing all data...');
-    //    clearStorage();
+//    console.log('Restarting data...');
+//    clearStorage();
     console.log('Loading data...');
     this.props.dispatch(handleInitialData(OWNER_VIEWS.HOME));
   }
