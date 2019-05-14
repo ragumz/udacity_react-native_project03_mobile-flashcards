@@ -32,10 +32,10 @@ function createNotification(notificationKey) {
 
 export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_REPEAT.DAY) {
   if (commons.isEmpty(notificationKey)) {
-    throw Error('No notification key specified for scheduling.');
+    throw Error('TO DEVELOPER: No notification key specified for scheduling.');
   }
   if (commons.isEmpty(repeat) || commons.isEmpty(NOTIFICATION_REPEAT[repeat.toUpperCase()])) {
-    throw Error(`Incorrect repeat option specified for scheduling notification ${notificationKey}.`);
+    throw Error(`TO DEVELOPER: Incorrect repeat option specified for scheduling notification ${notificationKey}.`);
   }
   if (commons.isNull(time)
       || time.getTime() < new Date().getTime()) {
@@ -44,7 +44,7 @@ export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_
     time.setHours(19);
     time.setMinutes(30);
   }
-  AsyncStorage.getItem(notificationKey)
+  return AsyncStorage.getItem(notificationKey)
     .then(JSON.parse)
     .then(data => {
       if (data === null) {
@@ -56,17 +56,23 @@ export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_
               repeat
             });
             AsyncStorage.setItem(notificationKey, JSON.stringify(true));
+            console.log(`Notification ${notificationKey} is set!`);
           } else {
-            alert('Hey! You have not enabled Notification permissions for this app.');
+            throw Error('You need to allow Notification permissions for this app. Access OS application setup to change.');
           }
         });
+      } else {
+        console.log(`Notification ${notificationKey} is already set!`);
       }
     })
     .then(() => {
       Permissions.getAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
         if (status !== 'granted') {
-          alert('Hey! You have not enabled Notification permissions for this app.');
+          throw Error('You need to allow Notification permissions for this app. Access OS application setup to change.');
         }
       });
-    });
+    }).catch(error =>
+      //TODO: tratar com promise.reject functione usar dispatch para exibir mensagem. Tratar duplicidade na exibição de mensagens
+      { throw error }
+    );
 }

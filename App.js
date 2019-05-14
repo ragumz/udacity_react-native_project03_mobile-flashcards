@@ -17,8 +17,7 @@ import {
 } from 'react-navigation';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import FCStatusBar from './home/FCStatusBar';
-import { COLORS, STORAGE_KEYS } from './utils/constants';
-import { scheduleNotification } from './utils/notifications';
+import { COLORS } from './utils/constants';
 
 const RouteConfigs = {
   ListDecks: {
@@ -116,15 +115,6 @@ const MainNavigator = createAppContainer(
 );
 
 export default class App extends React.Component {
-  componentDidMount() {
-    //schedule a new daily notification for everyday study quiz
-    try {
-      scheduleNotification(STORAGE_KEYS.NOTIFICATION_TODAY);
-    } catch (error) {
-      console.log(error.stack);
-    }
-  }
-
   render() {
     return (
       <Provider store={createStore(reducers, middlewares)}>

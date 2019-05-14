@@ -7,6 +7,8 @@ import { View } from 'react-native';
 import DeckList from '../deck/DeckList';
 import { OWNER_VIEWS } from '../utils/constants';
 import * as commons from '../utils/commons';
+import { STORAGE_KEYS } from '../utils/constants';
+import { scheduleNotification } from '../utils/notifications';
 //import { clearStorage } from '../utils/api';
 
 /**
@@ -19,6 +21,12 @@ class Home extends Component {
   componentDidMount() {
 //    console.log('Restarting data...');
 //    clearStorage();
+  //schedule a new daily notification for everyday study quiz
+    try {
+      scheduleNotification(STORAGE_KEYS.NOTIFICATION_TODAY);
+    } catch (error) {
+      console.log(error.stack);
+    }
     console.log('Loading data...');
     this.props.dispatch(handleInitialData(OWNER_VIEWS.HOME));
   }
