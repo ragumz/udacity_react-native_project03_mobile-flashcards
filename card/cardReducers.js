@@ -34,6 +34,13 @@ export default function cards(state = {}, action) {
         }
       };
 
+    //update an existing collection of Card object into state
+    case CARD_ACTIONS.MULTI_UPDATE:
+      return {
+        ...state,
+        ...action.cards
+      };
+
     //delete an existing Card object from state through delete flag field
     case CARD_ACTIONS.DELETE:
       return arrayToIndexedObject(Object.values(state).filter(card => card.id !== action.cardId));

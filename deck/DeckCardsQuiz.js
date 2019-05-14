@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import { AppLoading } from 'expo';
 import { View, Text, StyleSheet, BackHandler } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
@@ -55,7 +56,7 @@ class DeckCardsQuiz extends Component {
         currState.isFinished = true;
         currState.endTime = endTime;
       }
-      currState.cardsAnswer.push({id: card.id, answer: answer, time: commons.getDateMilisDifference(startTime, endTime)});
+      currState.cardsAnswer.push({ id: card.id, answer, startTime, endTime });
       return currState;
     }, () => {
       if (this.state.isFinished === true) {
@@ -65,26 +66,57 @@ class DeckCardsQuiz extends Component {
   }
 
   handleDeckAndCardsStatistics = () => {
-    /*let correctCount = 0;
-    let incorrectCount = 0;
-    let card;
+    let card, correctCount=0;
     const { cardsAnswer, startTime, endTime } = this.state;
-    const { deck, cards, dispatch } = this.props;
+    const { deck, cards, quizCards, dispatch } = this.props;
     const cardsUpd = {};
+    //calculate card global individual statistics
     cardsAnswer.map(ca => {
-      if (ca.answer === constants.QUIZ_ANSWERS.CORRECT.value) {
-        correctCount += 1;
-      } else {
-        incorrectCount += 1;
-      }
       card = cards[ca.id];
+      const { quizStatistics, bestScore, worstScore } = card;
+      if (ca.answer === constants.QUIZ_ANSWERS.CORRECT.value) {
+        correctCount = correctCount + 1;
+        quizStatistics.correct = quizStatistics.correct + 1;
+      } else {
+        quizStatistics.incorrect = quizStatistics.incorrect + 1;
+      }
+      quizStatistics.totalTimeMilis = quizStatistics.totalTimeMilis + commons.getDateMilisDifference(ca.startTime, ca.endTime);
+      if (commons.isNull(bestScore.startTime)
+          || ca.startTime < bestScore.startTime) {
+        bestScore.startTime = ca.startTime;
+        bestScore.endTime = ca.endTime;
+      }
+      if (commons.isNull(worstScore.startTime)
+          || ca.startTime > worstScore.startTime) {
+        worstScore.startTime = ca.startTime;
+        worstScore.endTime = ca.endTime;
+      }
       //TODO: acumular totalTime, atualizar best e worst
-      cardsUpd[ca.id] = Object.assign({}, card, {});
+      cardsUpd[ca.id] = Object.assign({}, card, { quizStatistics, bestScore, worstScore });
     });
-    const deckUpd = Object.assign({}, deck);
-    //TODO: acumular totalTime e timesCompleted, atualizar best, worst e amount
-    */
-    console.log('-> handleDeckAndCardsStatistics...');
+    //calculate deck global statistics
+    const { quizStatistics, bestScore, worstScore } = deck;
+    quizStatistics.timesCompleted = quizStatistics.timesCompleted + 1;
+    quizStatistics.totalTimeMilis = quizStatistics.totalTimeMilis + commons.getDateMilisDifference(startTime, endTime);
+    if (bestScore.correctAnswers < 0
+        || correctCount >= bestScore.correctAnswers) {
+      bestScore.correctAnswers = correctCount;
+      bestScore.startTime = startTime;
+      bestScore.endTime = endTime;
+      bestScore.deckSize = quizCards.length;
+    }
+    if (worstScore.correctAnswers < 0
+        || correctCount <= worstScore.correctAnswers) {
+      worstScore.correctAnswers = correctCount;
+      worstScore.startTime = startTime;
+      worstScore.endTime = endTime;
+      worstScore.deckSize = quizCards.length;
+    }
+    const deckUpd = Object.assign({}, deck, { quizStatistics, bestScore, worstScore });
+    //update storage and redux state
+    var promiseChain = Promise.resolve();
+    promiseChain = promiseChain.then(() => dispatch(handleUpdateMultiCards(constants.OWNER_VIEWS.DECK_QUIZ, cardsUpd)));
+    promiseChain = promiseChain.then(() => dispatch(handleUpdateDeck(constants.OWNER_VIEWS.DECK_QUIZ, deckUpd, false)));
   }
 
   handleRestartQuiz = () => {
@@ -114,8 +146,20 @@ class DeckCardsQuiz extends Component {
   }
 
   render() {
-    const { deck, cards, quizCards, shared } = this.props;
-    const { isFinished, currentCardIndex, cardsAnswer, isShowingAlert } = this.state;
+    const { cards, quizCards, shared } = this.props;
+    if (commons.canShowLoading(constants.OWNER_VIEWS.DECK_QUIZ, shared.loading)) {
+      //show loading
+      return <AppLoading />;
+    }
+    if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_QUIZ, shared.userMessage)) {
+      //show error/success alert modal dialog
+      showAlert(
+        Object.assign({}, shared.userMessage, {
+          buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(constants.OWNER_VIEWS.DECK_QUIZ)) }]
+        })
+      );
+    }
+    const { isFinished, currentCardIndex, cardsAnswer } = this.state;
     const cardsCount = quizCards.length;
     let card = null;
     let correct=0, incorrect=0, percentCorrect=0, percentIncorrect=0;
@@ -184,16 +228,16 @@ class DeckCardsQuiz extends Component {
  */
 function mapStateToProps({ decks, cards, shared }, { navigation }) {
   let deck = null;
-  let deckCards = null;
+  let quizCards = null;
   let deckId = commons.getNavigationParam(navigation, 'deckId');
   if (!commons.isEmpty(deckId)) {
     deck = decks[deckId];
-    deckCards = Object.values(cards).filter(card => card.deck === deckId);
+    quizCards = Object.values(cards).filter(card => card.deck === deckId);
   }
   return {
     deck,
     cards,
-    quizCards: deckCards,
+    quizCards,
     shared,
     navigation
   };

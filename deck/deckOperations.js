@@ -22,16 +22,20 @@ export function handleAddNewDeck(ownerViewId, deck) {
 /**
  * @description Update a Deck into the storage.
  */
-export function handleUpdateDeck(ownerViewId, deck) {
+export function handleUpdateDeck(ownerViewId, deck, showMessage=true) {
   return dispatch => {
     dispatch(showLoading(ownerViewId));
-    return submitDeck(deck)
-            .then(() => dispatch(updateDeck(deck)))
-            .then(() => dispatch(showMessage(ownerViewId, 'INFORMATION', 'Deck was succesfully saved.'))
-    ).catch(error =>
+    var promiseChain = Promise.resolve();
+    promiseChain = promiseChain.then(submitDeck(deck));
+    promiseChain = promiseChain.then(() => dispatch(updateDeck(deck)));
+    if (showMessage === true) {
+      promiseChain = promiseChain.then(() => dispatch(showMessage(ownerViewId, 'INFORMATION', 'Deck was succesfully saved.')));
+    }
+    promiseChain = promiseChain.catch(error =>
         dispatch(showMessage(ownerViewId, 'ERROR', 'Failed to save Deck.', error))
     ).finally(() =>
       dispatch(hideLoading(ownerViewId))
     );
+    return promiseChain;
   };
 }

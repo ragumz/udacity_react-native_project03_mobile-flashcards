@@ -14,7 +14,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/flashcards.png",
+    "notification": {
+      "icon": "./assets/flashcards.png"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

@@ -3,7 +3,20 @@
  */
 export const STORAGE_KEYS = Object.freeze({
   DECKS: 'Flashcards:decks',
-  CARDS: 'Flashcards:cards'
+  CARDS: 'Flashcards:cards',
+  NOTIFICATION_TODAY: 'Flashcards:notif_today'
+});
+
+/**
+ * @description Notification repeat options
+ */
+export const NOTIFICATION_REPEAT = Object.freeze({
+  MINUTE: "minute",
+  HOUR: "hour",
+  DAY: "day",
+  WEEK: "week",
+  MONTH: "month",
+  YEAR: "year",
 });
 
 /**
@@ -30,7 +43,9 @@ export const EMTPY_DECK = Object.freeze({
   id: '',
   title: '',
   created: null,
-  quizStatistics: {timesCompleted: 0, totalTimeMilis: 0, bestTimeMilis: -1, bestCardsAmount: 0, worstTimeMilis: -1, worstCardsAmount: 0},
+  quizStatistics: { timesCompleted: 0, totalTimeMilis: 0 },
+  bestScore:  { correctAnswers: -1, startTime: null, endTime: null, deckSize: 0 },
+  worstScore: { correctAnswers: -1, startTime: null, endTime: null, deckSize: 0 },
 });
 
 /**
@@ -43,7 +58,9 @@ export const EMTPY_CARD = Object.freeze({
   answer: '',
   difficulty: 0,
   created: null,
-  quizStatistics: {correct: 0, incorrect: 0, totalTimeMilis: 0, bestTimeMilis: -1, worstTimeMilis: -1},
+  quizStatistics: { correct: 0, incorrect: 0, totalTimeMilis: 0 },
+  bestScore:  { startTime: null, endTime: null },
+  worstScore: { startTime: null, endTime: null },
 });
 
 /**

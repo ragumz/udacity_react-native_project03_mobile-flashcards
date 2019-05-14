@@ -7,6 +7,7 @@ export const CARD_ACTIONS = Object.freeze({
   CREATE: 'CREATE_CARD',
   DELETE: 'DELETE_CARD',
   UPDATE: 'UPDATE_CARD',
+  MULTI_UPDATE: 'MULTI_UPDATE_CARDS',
 });
 
 /**
@@ -50,5 +51,16 @@ export function updateCard(card) {
   return {
     type: CARD_ACTIONS.UPDATE,
     card
+  }
+}
+
+/**
+ * @description Card reducer action to update a collection of Cards in an object parameter
+ * @param {Object} cards Object with a collection of Cards objects with ids as keys indexing the respective Card object
+ */
+export function updateMultiCards(cards) {
+  return {
+    type: CARD_ACTIONS.MULTI_UPDATE,
+    cards
   }
 }
