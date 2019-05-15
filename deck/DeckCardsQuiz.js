@@ -206,7 +206,7 @@ class DeckCardsQuiz extends Component {
           </View>
           <View style={styles.panel}>
             <CustomButton
-              style={ [styles.button, {backgroundColor: constants.COLORS.BLUE}] }
+              style={ [styles.button, {marginBottom: 10}] }
               onPress={() => this.handleRestartQuiz()}>
               Restart Quiz
             </CustomButton>

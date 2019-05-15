@@ -41,7 +41,7 @@ class DeckDetail extends Component {
         <DeckItem deck={deck} doNavigate={false} />
         <View>
           <CustomButton
-            style={[{marginBottom: 10}, styles.button]}
+            style={[styles.button, {marginBottom: 10}]}
             onPress={() => this.handleAddCard()}>
             Add Card
           </CustomButton>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   button: {
-    width: 150,
+    width: 200,
     fontSize: 16,
     fontWeight: 'bold',
   }

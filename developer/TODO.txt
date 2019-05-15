@@ -12,15 +12,16 @@ Design Views
 	OK Card Edit
   OK Card Item
   OK Card Quiz
-  Notification
+  OK Notification
+    ? Promise.reject threatment with user message
 Bonus
-  Card List
+  ? Show Quiz Statistics by Card/Deck/Global
   Edit Deck
   Delete Deck
+  Card List
   Edit Card Inline
   Delete Card
   Sort Deck Title/Cards
-  Show Statistics by Deck/Global
 
 OK Create folders
 	OK deck
@@ -42,16 +43,16 @@ Implement Views
     OK Test persistence
     OK Test Alerts
 	OK Card Edit
-  Card Quiz
+  OK Card Quiz
 
 Fix Bugs
   Double Alert shown on iOS Simulator
 
 OK Generate more decks and cards default fixed data
 
-Review Layout and UX
+OK Review Animations
 
-Review Animations
+Review Layout and UX
 
 Add documentation and comments to source code
 
