@@ -45,19 +45,19 @@ const TabNavigatorConfig = {
     header: null
   },
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? COLORS.BLUE : COLORS.WHITE,
     showLabel: true,
     showIcon: true,
+    activeTintColor: Platform.OS === 'ios' ? COLORS.BLUE : COLORS.WHITE,
     style: {
-      height: 56,
-      backgroundColor: Platform.OS === 'ios' ? COLORS.WHITE : COLORS.BLUE,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      height: 60,
       shadowOffset: {
         width: 0,
-        height: 3
+        height: 4
       },
-      shadowRadius: 6,
-      shadowOpacity: 1
+      shadowColor: 'rgba(0, 0, 0, 0.33)',
+      shadowRadius: 5,
+      shadowOpacity: 0.5,
+      backgroundColor: Platform.OS === 'ios' ? COLORS.WHITE : COLORS.BLUE,
     }
   }
 };

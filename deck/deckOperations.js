@@ -1,6 +1,6 @@
 import { showMessage, showLoading, hideLoading } from '../common/sharedActions';
-import { submitDeck } from '../utils/api';
-import { addNewDeck, updateDeck } from './deckActions'
+import { submitDeck, removeDeck } from '../utils/api';
+import { addNewDeck, updateDeck, deleteDeck } from './deckActions'
 
 /**
  * @description Add a new Deck into the storage.
@@ -37,5 +37,21 @@ export function handleUpdateDeck(ownerViewId, deck, showMessage=true) {
       dispatch(hideLoading(ownerViewId))
     );
     return promiseChain;
+  };
+}
+
+/**
+ * @description Delete a Deck from storage.
+ */
+export function handleDeleteDeck(ownerViewId, deckId) {
+  return dispatch => {
+    dispatch(showLoading(ownerViewId));
+    return removeDeck(deckId)
+            .then(() => dispatch(deleteDeck(deckId))
+    ).catch(error =>
+        dispatch(showMessage(ownerViewId, 'ERROR', 'Failed to delete Deck.', error))
+    ).finally(() =>
+      dispatch(hideLoading(ownerViewId))
+    );
   };
 }

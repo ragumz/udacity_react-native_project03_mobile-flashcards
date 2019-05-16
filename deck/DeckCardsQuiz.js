@@ -34,7 +34,7 @@ class DeckCardsQuiz extends Component {
     isFinished: false,
     currentCardIndex: 0,
     cardsAnswer: [],
-    isShowingAlert: false,
+    loading: false,
   };
 
   handleDeviceBackPress = () => {
@@ -70,6 +70,7 @@ class DeckCardsQuiz extends Component {
     const { cardsAnswer, startTime, endTime } = this.state;
     const { deck, cards, quizCards, dispatch } = this.props;
     const cardsUpd = {};
+    this.setState({ loading: true });
     //calculate card global individual statistics
     cardsAnswer.map(ca => {
       card = cards[ca.id];
@@ -117,6 +118,7 @@ class DeckCardsQuiz extends Component {
     var promiseChain = Promise.resolve();
     promiseChain = promiseChain.then(() => dispatch(handleUpdateMultiCards(constants.OWNER_VIEWS.DECK_QUIZ, cardsUpd)));
     promiseChain = promiseChain.then(() => dispatch(handleUpdateDeck(constants.OWNER_VIEWS.DECK_QUIZ, deckUpd, false)));
+    promiseChain.then(() => this.setState({ loading: false }))
   }
 
   handleRestartQuiz = () => {
@@ -126,7 +128,7 @@ class DeckCardsQuiz extends Component {
       isFinished: false,
       currentCardIndex: 0,
       cardsAnswer: [],
-      isShowingAlert: false,
+      loading: false,
     });
   };
 
@@ -136,9 +138,7 @@ class DeckCardsQuiz extends Component {
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleDeviceBackPress);
-    this.setState(currState => {
-      currState.startTime = new Date();
-    });
+    this.setState({ startTime: new Date() });
   }
 
   componentWillUnmount() {
@@ -147,7 +147,8 @@ class DeckCardsQuiz extends Component {
 
   render() {
     const { cards, quizCards, shared } = this.props;
-    if (commons.canShowLoading(constants.OWNER_VIEWS.DECK_QUIZ, shared.loading)) {
+    if (this.state.loading === true
+        || commons.canShowLoading(constants.OWNER_VIEWS.DECK_QUIZ, shared.loading)) {
       //show loading
       return <AppLoading />;
     }
@@ -189,20 +190,38 @@ class DeckCardsQuiz extends Component {
         { isFinished &&
         <View style={styles.panel}>
           <View style={styles.panel}>
-            <Text style={{marginBottom: 5}}>You finished this quiz!</Text>
+            <Text style={[styles.resultText, {marginTop: 15, marginBottom: 15, color: constants.COLORS.BLUE}]}>
+              You finished this Quiz!
+            </Text>
+            <Text style={[styles.resultText, {marginBottom: 15, color: constants.COLORS.ORANGE}]}>
+              {percentCorrect > 80 ? 'Congratulations! But don\'t get cocky, keep studying.' : 'Set aside time to study and practice more!'}
+            </Text>
             { percentCorrect >= percentIncorrect &&
               <View style={styles.panel}>
-                <Text>{percentCorrect}% of your answers were correct. Total of {correct} from {cardsCount}.</Text>
-                <Text>{incorrect > 0 ? `You gave ${incorrect} incorrect answer${incorrect > 1 ? 's' : ''}.` : 'None incorrect answers.'}</Text>
+                <Text style={styles.quizText}>
+                  {percentCorrect}% of your answers were correct.
+                </Text>
+                <Text style={styles.quizText}>
+                  Total of {correct} from {cardsCount}.
+                </Text>
+                <Text style={styles.quizText}>
+                  {incorrect > 0 ? `You gave ${incorrect} incorrect answer${incorrect > 1 ? 's' : ''}.` : 'None incorrect answers.'}
+                </Text>
               </View>
             }
             { percentCorrect < percentIncorrect &&
               <View style={styles.panel}>
-                <Text>{percentIncorrect}% of your answers were incorrect. Total of {incorrect} from {cardsCount}.</Text>
-                <Text>{correct > 0 ? `You gave ${correct} correct answer${correct > 1 ? 's' : ''}.` : 'None correct answers.'}</Text>
+                <Text style={styles.quizText}>
+                  {percentIncorrect}% of your answers were incorrect.
+                </Text>
+                <Text style={styles.quizText}>
+                  Total of {incorrect} from {cardsCount}.
+                </Text>
+                <Text style={styles.quizText}>
+                  {correct > 0 ? `You gave ${correct} correct answer${correct > 1 ? 's' : ''}.` : 'None correct answers.'}
+                  </Text>
               </View>
             }
-            <Text>{percentCorrect > 80 ? 'Congratulations! But don\'t get cocky, keep studying.' : 'Set aside time to study and practice more!'}</Text>
           </View>
           <View style={styles.panel}>
             <CustomButton
@@ -239,7 +258,7 @@ function mapStateToProps({ decks, cards, shared }, { navigation }) {
     cards,
     quizCards,
     shared,
-    navigation
+    navigation,
   };
 }
 
@@ -249,7 +268,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
   },
   panel: {
     flex: 1,
@@ -257,12 +276,22 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   answerCount: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   button: {
     width: 200,
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  resultText: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  quizText: {
+    textAlign: 'center',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

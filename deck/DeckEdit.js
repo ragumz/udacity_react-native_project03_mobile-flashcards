@@ -126,8 +126,12 @@ class DeckEdit extends Component {
    */
   handleFinishedEdit = () => {
     if (this.isCreateMode()) {
+      const { editDeck } = this.state;
+      const { navigation } = this.props;
       //start a new Deck after created
-      this.setState({ editDeck: Object.assign({}, constants.EMTPY_DECK) });
+      this.setState({ editDeck: Object.assign({}, constants.EMTPY_DECK) },
+        () => { navigation.navigate('DeckDetail', { deckId: editDeck.id, deckTitle: editDeck.title });
+      });
     }
   };
 
@@ -175,7 +179,7 @@ class DeckEdit extends Component {
     const isCreate = this.isCreateMode();
     return (
       <View style={styles.main}>
-        <View style={[styles.main, {alignItems: 'stretch', flexWrap: 'wrap'}]}>
+        <View style={[styles.main, {alignItems: 'flex-start'}]}>
           <TextInput
             style={styles.input}
             id="id"
@@ -248,10 +252,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   input: {
-    padding: 5,
-    height: 50,
-    fontSize: 18,
     width: 200,
+    height: 50,
+    padding: 5,
+    fontSize: 18,
   },
   button: {
     width: 150,

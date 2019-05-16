@@ -19,9 +19,13 @@ export const isEmpty = obj => {
   if (isNull(obj)) return true;
   if (typeof obj === 'string') {
     if (obj.length === 0) return true;
-  } else if (Array.isArray(obj)) {
-    if (Object.keys(obj).length === 0) return true;
-  } else if (obj.hasOwnProperty('lenght')) return obj.lenght === 0;
+  } else if (Array.isArray(obj) && obj.length === 0) {
+    return true;
+  } else if (obj.hasOwnProperty('lenght')) {
+    return obj.lenght === 0;
+  } else if (Object.keys(obj).length === 0) {
+    return true;
+  }
   return false;
 };
 
@@ -46,11 +50,12 @@ export const arrayToIndexedObject = (arrObjects = [], fieldKey = 'id') => {
  * @return A string with time and date
  */
 export const formatDate = (timestamp) => {
-  if (isEmpty(timestamp))
+  if (isNull(timestamp)) {
     return '';
+  }
   const d = new Date(timestamp);
   const time = d.toLocaleTimeString('en-US');
-  return `${d.toLocaleDateString('en-US')} ${time.substr(0, 5)}${time.slice(-2).toLowerCase()}`;
+  return `${d.toLocaleDateString('en-US')} ${time}`;
 }
 
 /**
@@ -179,5 +184,23 @@ export const getNavigationParam = (navigation, paramName) => {
  * @param {Date} endDate End date, must be greater than start date
  */
 export const getDateMilisDifference = (startDate, endDate) => {
+  if (typeof startDate === 'string') {
+    startDate = new Date(startDate);
+  }
+  if (typeof endDate === 'string') {
+    endDate = new Date(endDate);
+  }
   return Math.abs(endDate - startDate);
+}
+
+/**
+ * @description Convert a miliseconds amount to a time text representation
+ *
+ * @param {number} ms Amount of miliseconds to convert to time text
+ * @returns A text representing time as hh:mm:ss.ms
+ */
+export const msToTime = (ms) => {
+  // Pad to 2 or 3 digits, default is 2
+  var pad = (n, z = 2) => ('00' + n).slice(-z);
+  return pad(ms/3.6e6|0) + ':' + pad((ms%3.6e6)/6e4 | 0) + ':' + pad((ms%6e4)/1000|0) + '.' + pad(ms%1000, 3);
 }

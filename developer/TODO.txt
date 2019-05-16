@@ -1,10 +1,13 @@
 PROJECT MOBILE FLASH CARDS - PENDING DEVELOPMENT
 
-OK-Set GitHub project
-OK-expot init mobile_flashcards
+OK Set GitHub project
+
+OK expot init mobile_flashcards
 	yarn add expo, react, react-native, react-navigation, react-redux, redux, react-thunk, redux-thunk
+
 OK Implement AsyncStorage API
-Design Views
+
+OK Design Views
   OK Deck Item
 	OK Deck List
 	OK Deck Detail
@@ -13,15 +16,7 @@ Design Views
   OK Card Item
   OK Card Quiz
   OK Notification
-    ? Promise.reject threatment with user message
-Bonus
-  ? Show Quiz Statistics by Card/Deck/Global
-  Edit Deck
-  Delete Deck
-  Card List
-  Edit Card Inline
-  Delete Card
-  Sort Deck Title/Cards
+    NA Promise.reject threatment with user message
 
 OK Create folders
 	OK deck
@@ -35,7 +30,7 @@ OK Create Thunk
 OK Create Reducers
 OK Create Middleware
 
-Implement Views
+OK Implement Views
 	OK Deck View
 	OK Deck List
 	OK Deck Detail
@@ -44,6 +39,15 @@ Implement Views
     OK Test Alerts
 	OK Card Edit
   OK Card Quiz
+
+Bonus Development
+  OK Show Quiz Statistics by Card/Deck/Global
+  Edit Deck
+  Delete Deck
+  Card List
+  Edit Card Inline
+  Delete Card
+  Sort Deck Title/Cards
 
 Fix Bugs
   Double Alert shown on iOS Simulator

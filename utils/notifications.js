@@ -14,7 +14,7 @@ function createNotification(notificationKey) {
     case STORAGE_KEYS.NOTIFICATION_TODAY:
       return {
         title: 'Study today with Flashcards!',
-        body: "It's time to start a quick Flashcards' Quiz to refresh your memory!",
+        body: "Start a quick Flashcards' Quiz to refresh your memory now!",
         android: {
           priority: 'high',
           sticky: false,
@@ -31,12 +31,6 @@ function createNotification(notificationKey) {
 }
 
 export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_REPEAT.DAY) {
-  if (commons.isEmpty(notificationKey)) {
-    throw Error('TO DEVELOPER: No notification key specified for scheduling.');
-  }
-  if (commons.isEmpty(repeat) || commons.isEmpty(NOTIFICATION_REPEAT[repeat.toUpperCase()])) {
-    throw Error(`TO DEVELOPER: Incorrect repeat option specified for scheduling notification ${notificationKey}.`);
-  }
   if (commons.isNull(time)
       || time.getTime() < new Date().getTime()) {
     time = new Date();
@@ -58,7 +52,7 @@ export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_
             AsyncStorage.setItem(notificationKey, JSON.stringify(true));
             console.log(`Notification ${notificationKey} is set!`);
           } else {
-            throw Error('You need to allow Notification permissions for this app. Access OS application setup to change.');
+            alert('You need to allow Notification permissions for this app. Access OS application setup to change.');
           }
         });
       } else {
@@ -68,11 +62,10 @@ export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_
     .then(() => {
       Permissions.getAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
         if (status !== 'granted') {
-          throw Error('You need to allow Notification permissions for this app. Access OS application setup to change.');
+          alert('You need to allow Notification permissions for this app. Access OS application setup to change.');
         }
       });
     }).catch(error =>
-      //TODO: tratar com promise.reject functione usar dispatch para exibir mensagem. Tratar duplicidade na exibição de mensagens
-      { throw error }
+      alert(`[ERROR] Failed to check notification: ${error.stack} `)
     );
 }

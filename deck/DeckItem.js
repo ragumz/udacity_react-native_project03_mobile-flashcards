@@ -4,7 +4,9 @@ import { withNavigation } from 'react-navigation';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { COLORS } from '../utils/constants';
 import * as commons from '../utils/commons';
+import * as constants from '../utils/constants';
 import { showAlert } from '../common/sharedOperations';
+import { handleDeleteDeck } from './deckOperations';
 
 /**
  * @description React component to show Deck's item.
@@ -27,7 +29,7 @@ class DeckItem extends Component {
     });
   };
 
-  navigateToDeck = () => {
+  handleNavigateToDeck = () => {
     const { deck, doNavigate, navigation } = this.props;
     if (doNavigate === true) {
       //start the animation and at the end navigate to DeckDetail
@@ -39,6 +41,20 @@ class DeckItem extends Component {
       });
     }
   };
+
+  deleteDeck = () => {
+    const { deck, dispatch } = this.props;
+    dispatch(handleDeleteDeck(constants.OWNER_VIEWS.DECK_ITEM, deck.id));
+  }
+
+  handleAskDelete = () => {
+    const { doNavigate } = this.props;
+    if (doNavigate === true) {
+      showAlert(commons.getUserMessage('QUESTION',
+        'Do you want to delete this Deck and all its Cards permanently?', null,
+        [{text: 'No'}, {text: 'Yes', onPress: () => this.deleteDeck()}]));
+    }
+  }
 
   render() {
     const { deck, cardsCount, doNavigate, navigation, viewStyle } = this.props;
@@ -65,11 +81,21 @@ class DeckItem extends Component {
     const mainStyle = doNavigate
       ? [styles.card, { transform: [{ rotateY: rotate }] }]
       : propStyle;
+    const titleStyle = doNavigate
+      ? styles.title
+      : [styles.title, { fontSize: 24 }]
+    const countStyle = doNavigate
+      ? styles.count
+      : [styles.count, { fontSize: 20 }]
+    //TODO: onLongPress={() => this.handleAskDelete()}
     return (
-      <TouchableWithoutFeedback onPress={() => this.navigateToDeck()}>
+      <TouchableWithoutFeedback
+        onPress={() => this.handleNavigateToDeck()}>
         <Animated.View style={mainStyle}>
-          <Text style={[styles.title]}>{deck.title}</Text>
-          <Text style={[styles.count]}>
+          <Text style={titleStyle}>
+            {deck.title}
+          </Text>
+          <Text style={countStyle}>
             {qcount} Card{qcount === 1 ? '' : 's'}
           </Text>
         </Animated.View>
@@ -90,7 +116,7 @@ function mapStateToProps({ cards }, { deck, doNavigate, viewStyle }) {
     deck,
     cardsCount,
     doNavigate,
-    viewStyle
+    viewStyle,
   };
 }
 

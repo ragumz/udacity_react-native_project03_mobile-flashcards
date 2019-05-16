@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import DeckItem from './DeckItem';
 import * as commons from '../utils/commons';
 
@@ -11,7 +11,7 @@ class DeckList extends Component {
   render() {
     const { decks } = this.props;
     if (commons.isEmpty(decks)) {
-      showAlert(commons.getUserMessage('INFORMATION', 'There are no Decks, please, create new ones.', null, [{ text: 'OK' }]));
+      return <View></View>;
     }
     return (
       <ScrollView style={styles.list}>
@@ -28,7 +28,7 @@ class DeckList extends Component {
  */
 function mapStateToProps({ decks }) {
   return {
-    decks
+    decks,
   };
 }
 

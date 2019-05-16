@@ -170,15 +170,15 @@ class CardEdit extends Component {
     const isCreate = this.isCreateMode();
     return (
       <View style={styles.main}>
-        <View style={[styles.main, {alignItems: 'stretch', flexWrap: 'wrap'}]}>
+        <View style={[styles.main, {alignItems: 'flex-start'}]}>
           <TextInput
             style={styles.input}
             id="question"
             placeholder="Card Question"
             value={question}
-            maxLength={500}
+            maxLength={2048}
             multiline={true}
-            numberOfLines={2}
+            numberOfLines={4}
             scrollEnabled={true}
             underlineColorAndroid={constants.COLORS.BLACK}
             onChangeText={text => this.handleChangeValue(text, 'question')}
@@ -191,7 +191,7 @@ class CardEdit extends Component {
             id="answer"
             placeholder="Card Answer"
             value={answer}
-            maxLength={1500}
+            maxLength={2048}
             multiline={true}
             numberOfLines={4}
             scrollEnabled={true}
@@ -201,17 +201,20 @@ class CardEdit extends Component {
           {!commons.isEmpty(fieldValidation.answer) && (
             <Text style={{ color: "red" }}>{fieldValidation.answer}</Text>
           )}
-          <Slider
-            style={styles.input}
-            id="difficulty"
-            placeholder="Card Difficulty"
-            title="Card Difficulty"
-            step={1}
-            value={difficulty}
-            minimumValue={0}
-            maximumValue={10}
-            onValueChange={value => this.handleChangeValue(value, 'difficulty')}
-          />
+          <View style={{marginTop: 20}}>
+            <Text style={styles.label}>
+              Difficulty Level (0-10): {difficulty}
+            </Text>
+            <Slider
+              style={[styles.input, {height: 50}]}
+              id="difficulty"
+              step={1}
+              value={difficulty}
+              minimumValue={0}
+              maximumValue={10}
+              onValueChange={value => this.handleChangeValue(value, 'difficulty')}
+            />
+          </View>
         </View>
         <View style={styles.main}>
           <CustomButton style={styles.button} onPress={(event) => this.handleSubmit(event, isCreate)}>
@@ -265,10 +268,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   input: {
-    padding: 5,
-    height: 50,
-    fontSize: 18,
     width: 300,
+    height: 100,
+    padding: 5,
+    fontSize: 18,
+  },
+  label: {
+    paddingLeft: 5,
+    fontSize: 14,
   },
   button: {
     width: 150,

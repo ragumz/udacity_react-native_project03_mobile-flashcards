@@ -68,6 +68,8 @@ export const EMTPY_CARD = Object.freeze({
  */
 export const OWNER_VIEWS = Object.freeze({
   HOME: 'Home',
+  DECK_DETAIL: 'DeckDetail',
+  DECK_ITEM: 'DeckItem',
   DECK_EDIT: 'DeckEdit',
   CARD_EDIT: 'CardEdit',
   DECK_QUIZ: 'DeckCardsQuiz',

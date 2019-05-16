@@ -83,6 +83,9 @@ class CardQuiz extends Component {
               {switchText}
             </Text>
           </TouchableWithoutFeedback>
+          <Text style={styles.label}>
+            (Dificulty Level: {card.difficulty} of 10)
+          </Text>
         </Animated.View>
         <View
           style={[styles.panel, {justifyContent: 'flex-end'}]}>
@@ -118,8 +121,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   showingText: {
+    textAlign: 'center',
+    alignItems: 'center',
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  label: {
+    fontSize: 14,
   },
   switchButton: {
     fontSize: 18,
