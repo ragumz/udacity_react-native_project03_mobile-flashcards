@@ -180,31 +180,35 @@ class DeckEdit extends Component {
     return (
       <View style={styles.main}>
         <View style={[styles.main, {alignItems: 'flex-start'}]}>
-          <TextInput
-            style={styles.input}
-            id="id"
-            placeholder="Deck Identifier"
-            value={id}
-            editable={isCreate}
-            maxLength={50}
-            underlineColorAndroid={constants.COLORS.BLACK}
-            onChange={event => this.handleChangeValue(event, 'id')}
-          />
-          {!commons.isEmpty(fieldValidation.id) && (
-            <Text style={{ color: "red" }}>{fieldValidation.id}</Text>
-          )}
-          <TextInput
-            style={[styles.input, {width: 300}]}
-            id="title"
-            placeholder="Deck Title"
-            value={title}
-            maxLength={200}
-            underlineColorAndroid={constants.COLORS.BLACK}
-            onChange={event => this.handleChangeValue(event, 'title')}
-          />
-          {!commons.isEmpty(fieldValidation.title) && (
-            <Text style={{ color: "red" }}>{fieldValidation.title}</Text>
-          )}
+          <View>
+            <TextInput
+              style={styles.input}
+              id="id"
+              placeholder="Deck Identifier"
+              value={id}
+              editable={isCreate}
+              maxLength={50}
+              underlineColorAndroid={constants.COLORS.BLACK}
+              onChange={event => this.handleChangeValue(event, 'id')}
+            />
+            {!commons.isEmpty(fieldValidation.id) && (
+              <Text style={{ color: "red" }}>{fieldValidation.id}</Text>
+            )}
+          </View>
+          <View>
+            <TextInput
+              style={[styles.input, {width: 300}]}
+              id="title"
+              placeholder="Deck Title"
+              value={title}
+              maxLength={200}
+              underlineColorAndroid={constants.COLORS.BLACK}
+              onChange={event => this.handleChangeValue(event, 'title')}
+            />
+            {!commons.isEmpty(fieldValidation.title) && (
+              <Text style={{ color: "red" }}>{fieldValidation.title}</Text>
+            )}
+          </View>
         </View>
         <View style={styles.main}>
           <CustomButton style={styles.button} onPress={(event) => this.handleSubmit(event, isCreate)}>

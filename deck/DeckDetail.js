@@ -55,7 +55,7 @@ class DeckDetail extends Component {
     }
     return (
       <View style={styles.detail}>
-        <View>
+        <View style={{marginTop: 25}}>
           <DeckItem deck={deck} doNavigate={false} />
           <Text style={[styles.fieldsText, {marginTop: 5}]}>
             Created at {commons.formatDate(created)}
@@ -85,7 +85,7 @@ class DeckDetail extends Component {
             Add Card
           </CustomButton>
           <CustomButton
-            style={styles.button}
+            style={[styles.button, {marginBottom: 25}]}
             disabled={ commons.isEmpty(cards) }
             onPress={() => this.handleStartQuiz()}>
             Start Quiz
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   detail: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   button: {
     width: 200,

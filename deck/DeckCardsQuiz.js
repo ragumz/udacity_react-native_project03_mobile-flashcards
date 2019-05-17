@@ -99,19 +99,22 @@ class DeckCardsQuiz extends Component {
     const { quizStatistics, bestScore, worstScore } = deck;
     quizStatistics.timesCompleted = quizStatistics.timesCompleted + 1;
     quizStatistics.totalTimeMilis = quizStatistics.totalTimeMilis + commons.getDateMilisDifference(startTime, endTime);
+    const deckSize = quizCards.length;
     if (bestScore.correctAnswers < 0
-        || correctCount >= bestScore.correctAnswers) {
+        || correctCount >= bestScore.correctAnswers
+        || deckSize > bestScore.deckSize) {
       bestScore.correctAnswers = correctCount;
       bestScore.startTime = startTime;
       bestScore.endTime = endTime;
-      bestScore.deckSize = quizCards.length;
+      bestScore.deckSize = deckSize;
     }
     if (worstScore.correctAnswers < 0
-        || correctCount <= worstScore.correctAnswers) {
+        || correctCount <= worstScore.correctAnswers
+        || deckSize > worstScore.deckSize) {
       worstScore.correctAnswers = correctCount;
       worstScore.startTime = startTime;
       worstScore.endTime = endTime;
-      worstScore.deckSize = quizCards.length;
+      worstScore.deckSize = deckSize;
     }
     const deckUpd = Object.assign({}, deck, { quizStatistics, bestScore, worstScore });
     //update storage and redux state
@@ -188,8 +191,8 @@ class DeckCardsQuiz extends Component {
           <CardQuiz card={card} handleAnswer={this.handleAnswer} />
         }
         { isFinished &&
-        <View style={styles.panel}>
-          <View style={styles.panel}>
+        <View style={styles.subpanel}>
+          <View style={styles.subpanel}>
             <Text style={[styles.resultText, {marginTop: 15, marginBottom: 15, color: constants.COLORS.BLUE}]}>
               You finished this Quiz!
             </Text>
@@ -197,7 +200,7 @@ class DeckCardsQuiz extends Component {
               {percentCorrect > 80 ? 'Congratulations! But don\'t get cocky, keep studying.' : 'Set aside time to study and practice more!'}
             </Text>
             { percentCorrect >= percentIncorrect &&
-              <View style={styles.panel}>
+              <View style={[styles.panel, {marginBottom: 25}]}>
                 <Text style={styles.quizText}>
                   {percentCorrect}% of your answers were correct.
                 </Text>
@@ -205,12 +208,12 @@ class DeckCardsQuiz extends Component {
                   Total of {correct} from {cardsCount}.
                 </Text>
                 <Text style={styles.quizText}>
-                  {incorrect > 0 ? `You gave ${incorrect} incorrect answer${incorrect > 1 ? 's' : ''}.` : 'None incorrect answers.'}
+                  {incorrect > 0 ? `You gave ${incorrect} incorrect answer${incorrect > 1 ? 's' : ''}.` : 'No incorrect answers.'}
                 </Text>
               </View>
             }
             { percentCorrect < percentIncorrect &&
-              <View style={styles.panel}>
+              <View style={[styles.panel, {marginBottom: 25}]}>
                 <Text style={styles.quizText}>
                   {percentIncorrect}% of your answers were incorrect.
                 </Text>
@@ -218,7 +221,7 @@ class DeckCardsQuiz extends Component {
                   Total of {incorrect} from {cardsCount}.
                 </Text>
                 <Text style={styles.quizText}>
-                  {correct > 0 ? `You gave ${correct} correct answer${correct > 1 ? 's' : ''}.` : 'None correct answers.'}
+                  {correct > 0 ? `You gave ${correct} correct answer${correct > 1 ? 's' : ''}.` : 'No correct answers.'}
                   </Text>
               </View>
             }
@@ -230,7 +233,7 @@ class DeckCardsQuiz extends Component {
               Restart Quiz
             </CustomButton>
             <CustomButton
-              style={ [styles.button] }
+              style={ [styles.button, {marginBottom: 20}] }
               onPress={() => this.handleBackToDeck()}>
               Back to Deck
             </CustomButton>
@@ -268,12 +271,16 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   panel: {
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  subpanel: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
   answerCount: {
     fontSize: 18,
