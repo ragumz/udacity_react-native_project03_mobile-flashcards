@@ -1,8 +1,8 @@
 # Flashcards Project of Rafael Araujo Gumz
 
 This is Flashcards Android smartphone's app project, developed for the final assessment of Udacity's React Native Nanodegree course.
-It was tested only on Android 8.1.0 devices, so it is no yet suitable to iOS devices or emulators, nor tested on Android emulators.
-The app screens' contents were built using React, React Native, React Navigation, Redux, Expo, JSX, JS and equivalent CSS Styles with Flexbox.
+It was tested only on an 5.5" screen Android 8.1.0 device, so it is no yet suitable to iOS devices or emulators, nor tested on Android emulators or in multiple screen sizes.
+The app screens' contents were built using Expo, React, React Native, React Navigation, Redux, JSX, JS and equivalent CSS Styles with Flexbox.
 They are dynamic and use own static styles and design inspired on previous examples and exercises of this course.
 This mobile app improve the user study skills with the help of flashcards' collections divided on decks. It allows to add new Decks and its Cards, also running quizzes to study, measuring time and giving statistics about the thought answers.
 React+Redux is used to share its data and state across components and screens as well as React Native AsyncStorage do save the data permanently on the device, also managing data fetch, update and remove.
@@ -10,12 +10,11 @@ There is no authorization or authentication process, as the project's rubric do 
 
 ## Building and Deploying
 
-It was developed and manually tested in an Android 8.1.0 device running Expo client.
-To start using the web application right away:
-* If Expo is not installed on you computer, run `yarn global add expo-cli`.
+To start using the mobile application right away:
+* If [`Expo`](https://expo.io/learn) is not installed on you computer, run `yarn global add expo-cli`. You can use `npm` if preferred.
 * Install all project dependencies running `yarn install` on the project root directory.
 * Start the Expo server running `yarn start` on the project root directory.
-* At the Expo web browser page select the device or emulator/simulator you want to run and wait for Expo to do the rest. Follow Expo's instructions to solve any problem. If needed, Expo can be manually installed on the Android device through Google Play at `https://play.google.com/store/apps/details?id=host.exp.exponent&showAllReviews=true`.
+* At the Expo web browser page select the device or emulator/simulator you want to run and wait for Expo to do the rest. Follow Expo's instructions to solve any problem. If needed, Expo can be manually installed on the Android device through Google Play at [`Google Play Expo App`](https://play.google.com/store/apps/details?id=host.exp.exponent&showAllReviews=true).
 
 ## Project Files Structure
 
@@ -65,23 +64,20 @@ To start using the web application right away:
 ├── README.md - # This file.
 └── yarn.lock - # Yarn's versions controls of each dependency installed.
 ```
-//TODO: next sessions...
+
 ## Libraries and Dependencies
 
-The following libraries where added to this project through [npm install --save](https://docs.npmjs.com/cli/install):
-* [prop-types](https://www.npmjs.com/package/prop-types) - As instructed on the React Fundamentals course.
-* [@material-ui/core](https://www.npmjs.com/package/@material-ui/core) - Used some UI components like TextField, Button, Fab, Dialog etc.
-* [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons) - Used some selected SVG icons to enrich UI and user UX.
-* [react-dom](https://www.npmjs.com/package/react-dom) - Needed to React manages the DOM state and server renderers.
-* [react-icons](https://www.npmjs.com/package/react-icons) - Used some selected SVG icons to enrich UI and user UX.
-* [react-redux](https://www.npmjs.com/package/react-redux) - Main requirement to manage application state globally with Redux API container.
-* [react-redux-loading](https://www.npmjs.com/package/react-redux-loading) - A React-Redux loading bar API to easy long process wait.
-* [react-router-dom](https://www.npmjs.com/package/react-router-dom) - Needed to route creation as a project requirement and navigation.
-* [react-thunk](https://www.npmjs.com/package/react-thunk) - Enable thunk middleware to React components.
-* [redux](https://www.npmjs.com/package/redux) - Redux API container to manage predictable state.
-* [redux-thunk](https://www.npmjs.com/package/redux-thunk) - Enable thunk middleware to Redux.
+The following libraries where added to this project through [`yarn add`](https://yarnpkg.com/en/docs/cli/add):
+* [`expo`](https://expo.io/tools) - As instructed on the React Native course.
+* [`react`](https://www.npmjs.com/package/react) - Required React core to DOM and UI renderers management.
+* [`react-native`](https://www.npmjs.com/package/react-native) - Required React Native core to mobile development.
+* [`react-navigation`](https://www.npmjs.com/package/react-navigation) - Required React Navigation core to mobile screen navigation.
+* [`react-redux`](https://www.npmjs.com/package/react-redux) - Manage application state globally with Redux API container.
+* [`react-thunk`](https://www.npmjs.com/package/react-thunk) - Enable thunk middleware to React components.
+* [`redux`](https://www.npmjs.com/package/redux) - Redux API container to manage predictable state.
+* [`redux-thunk`](https://www.npmjs.com/package/redux-thunk) - Enable thunk middleware to Redux.
 
-## Web Application Pages and Navigation
+## Mobile Application Screens and Navigation
 
 A toolbar was fixed on the top of every page at `App` React component, containing the web application title and two buttons named `Home` and `New Deck`. It may also contains contextual buttons (or menu items) added on each page through `commonActions` and `commonReducers` functions processed at `Menu` React component.
 
@@ -106,17 +102,19 @@ Some caveats that could be improved on future releases:
 * All React components of this project were created trying to follow the DO ONE THING principle and all good practices taught during the course, however due to React development unexperience, they may have grown more than expected.
 * The components should be better segregated to Presentational and Container Components, may even use PureComponents.
 * Some common behavior should be placed on a parent component class and inherited.
-* On Deck or Comment edit, detect if the values changed before handling backend and redux state data saving.
-* Make list sorting options save by page route.
-* Improve Udacity api-server to manage more fields and operations to better Category, Deck and Comment use.
-* Better way to discover the category name on current page URL when on any Deck component to block category change.
-* The CSS should be improved.
+* Make Deck and Card editing, giving delete option also.
+* Show a Deck's Card list and allow inline editing.
+* Make Deck and Card list sorting options, saved by screen.
+* Improve AsyncStorage management to allow more operations and user's full control of its data.
+* All components' styles could be improved.
+* Ensure that `sharedOperations.showAlert()` function calls managed by shared userMessage redux state shows only once to the user.
+* Improve iOS screen styles, make platform unique instructions where required and test on a real Apple device.
 
-## Create React App
+## Create React Native App
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [`expo init`](https://expo.io/learn).
 
-## Backend Server
+## AsyncStorage Management
 
 To simplify the development process, Udacity provided a backend server to develop against.
 The backend API uses a fixed set of categories, decks and comments data.
@@ -140,9 +138,9 @@ To interact with REST web service operations on this backend server the [`restAP
 
 ## Final Notes
 
-* This repository contains a particular React project code for Udacity instructors evaluation only.
+* This repository contains a particular React Native project code for Udacity instructors evaluation only.
 * Students are encouraged to try developing this exercise by themselves and "NOT TO COPY" the source codes.
 * All the text, comments and documentation was made in English, to practice and foreseeing future Udacity courses. However, some errors may have been left behind due the lack of revision time!
 * The Git commit messages were short and clean.
-* It was reused some code and concepts from [`React Fundamentals My Reads project`](https://github.com/ragumz/udacity-react-project01-myreads) of my creation.
-* All the source code were produced between 20 and 00:30 hours after a long day of 9 hours of architecture, engineering and programming. Also produded on weekends, when my 1 year old daughter allowed. That is mid-age student life!
+* It was considere some concepts from [`React Fundamentals My Reads project`](https://github.com/ragumz/udacity-react-project01-myreads) of my creation.
+* All the source code were produced between 20 and 00:30 hours after a long day of 9 hours of architecture, engineering and programming. Also produded on weekends, when my 1,5 year old daughter allowed. That is mid-age student life!
