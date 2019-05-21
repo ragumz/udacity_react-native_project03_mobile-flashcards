@@ -11,10 +11,11 @@ There is no authorization or authentication process, as the project's rubric do 
 ## Building and Deploying
 
 To start using the mobile application right away:
-* If [`Expo`](https://expo.io/learn) is not installed on you computer, run `yarn global add expo-cli`. You can use `npm` if preferred.
-* Install all project dependencies running `yarn install` on the project root directory.
-* Start the Expo server running `yarn start` on the project root directory.
-* At the Expo web browser page select the device or emulator/simulator you want to run and wait for Expo to do the rest. Follow Expo's instructions to solve any problem. If needed, Expo can be manually installed on the Android device through Google Play at [`Google Play Expo App`](https://play.google.com/store/apps/details?id=host.exp.exponent&showAllReviews=true).
+
+- If [`Expo`](https://expo.io/learn) is not installed on you computer, run `yarn global add expo-cli`. You can use `npm` if preferred.
+- Install all project dependencies running `yarn install` on the project root directory.
+- Start the Expo server running `yarn start` on the project root directory.
+- At the Expo web browser page select the device or emulator/simulator you want to run and wait for Expo to do the rest. Follow Expo's instructions to solve any problem. If needed, Expo can be manually installed on the Android device through Google Play at [`Google Play Expo App`](https://play.google.com/store/apps/details?id=host.exp.exponent&showAllReviews=true).
 
 ## Project Files Structure
 
@@ -68,47 +69,45 @@ To start using the mobile application right away:
 ## Libraries and Dependencies
 
 The following libraries where added to this project through [`yarn add`](https://yarnpkg.com/en/docs/cli/add):
-* [`expo`](https://expo.io/tools) - As instructed on the React Native course.
-* [`react`](https://www.npmjs.com/package/react) - Required React core to DOM and UI renderers management.
-* [`react-native`](https://www.npmjs.com/package/react-native) - Required React Native core to mobile development.
-* [`react-navigation`](https://www.npmjs.com/package/react-navigation) - Required React Navigation core to mobile screen navigation.
-* [`react-redux`](https://www.npmjs.com/package/react-redux) - Manage application state globally with Redux API container.
-* [`react-thunk`](https://www.npmjs.com/package/react-thunk) - Enable thunk middleware to React components.
-* [`redux`](https://www.npmjs.com/package/redux) - Redux API container to manage predictable state.
-* [`redux-thunk`](https://www.npmjs.com/package/redux-thunk) - Enable thunk middleware to Redux.
+
+- [`expo`](https://expo.io/tools) - As instructed on the React Native course. At the time of development it was installed Expo version 2.16.1.
+- [`react`](https://www.npmjs.com/package/react) - Required React core to DOM and UI renderers management.
+- [`react-native`](https://www.npmjs.com/package/react-native) - Required React Native core to mobile development.
+- [`react-navigation`](https://www.npmjs.com/package/react-navigation) - Required React Navigation core to mobile screen navigation.
+- [`redux`](https://www.npmjs.com/package/redux) - Redux API container to manage predictable state.
+- [`react-redux`](https://www.npmjs.com/package/react-redux) - Manage application state globally with Redux API container. It was used version 6.0.0 because an internal redux library error cause by a deprecated function.
+- [`react-thunk`](https://www.npmjs.com/package/react-thunk) - Enable thunk middleware to React components.
+- [`redux-thunk`](https://www.npmjs.com/package/redux-thunk) - Enable thunk middleware to Redux.
 
 ## Mobile Application Screens and Navigation
 
-A toolbar was fixed on the top of every page at `App` React component, containing the web application title and two buttons named `Home` and `New Deck`. It may also contains contextual buttons (or menu items) added on each page through `commonActions` and `commonReducers` functions processed at `Menu` React component.
-
-The main page (/) presents all Category and Deck object entities fetched from backend server. Clicking on one Category take the user to its page (/category/[name]), where it presents a list of all its Decks.
-Each Deck panel contains buttons to view, edit or delete the Deck object, also to increment or decrement the Deck vote score field.
-
-Clicking on a Deck panel upright icon, except the delete, the user is sent to the `DeckEdit` React component to view (/deck/view/[deckId]/[bool_fixedCategory|empty]) and/or edit (/deck/edit/[deckId]/[bool_fixedCategory|empty]) almost all selected Deck fields values. On this component the user can also see all `CommentItem` React component displaying a Comment entity details on a `CommentList` React component. The Comments of a Deck are fetched from backend server only if the user view or edit one Deck entity.
-The user is allowed to create or edit a Comment inline, at the top of the `CommentList` elements and use the action buttons to save or cancel.
-
-At almost all Category, Deck and Comment React components, some action buttons may be contextually shown to create, save or undo entity value editions, delete entity or go back to exit the current page or action. Some of them being shown on the app toolbar, other beside the main entity panel title.
-
-When opened the `CategoryItem` React component clicking on a Category entity name link (/category/[categoryId]), the opened page shows all the Category's Deck object entities on each `DeckItem` React component enlisted by `DeckList` React component. If the user decides to edit a Deck from this page the category cannot be changed.
-If the user clicks on the New Deck button (/deck/new/[categoryName|empty]) at the toolbar or the DeckItem HTML panel button, being on the Category page, the new Deck will have this parent Category fixed and the user cannot change it. However, if the user create a new Deck or edit an existing one outside the `CategoryItem` page, the category may be changed freely.
-
-On any deletion action button, a modal dialog window is opened to ask the user to confirm the decision, because the entity is deleted permanently and may not be recovered.
-
-Every list panel has a button with a `MoreVertIcon` that presents the sort options of the related entity: Category, Deck and Comment.
+The current app follows all the required Udacity project [`rubrics`](https://review.udacity.com/#!/rubrics/1215/view).
+It presents a main navigation screen with 2 tabs: one that shows a list of Decks and the other allows the creation of a Deck.
+The Deck item presents the amount of cards that it contains and tapping over a Deck navigate to the Deck Details after a spin animation.
+The Deck Details screen presents the amount of cards, the creation date and the done quizzes statistics, with the acumulated times and the total ran time to complete them. It also presents the user's best and worst score, considering the percent, total correct questions, the required time to complete and the total cards on the Deck at the date. If the total cards change, the best and worst scores are reset on the next quiz.
+Still on Deck Details screen two buttons are presented, the Add Card and Start Quiz, that do exactly what they mean.
+The Add Card option presents the Card Edit screen that requires a question and a answer. The user may choose optionally its difficulty level, just to improve its knowledge. When hitting Create button, it presents an alert window to inform its persistence success.
+The Start Quiz button brings to the user all the Cards on the selected Deck, with their questions and answers. The user may hit the "Answer" or "Question" buttons to switch between them and on the Answer side of the Card, choose if he/she thought the Correct or Incorrect answer. When the user answer the last question, a aler window inform the end of it and the the Quiz results are summarized. When the user go back and exists from it, the Deck Details has its Quiz statistics updated.
+Finally, the New Deck tab presents the Deck Edit screen, where the user is required to input a unique identifier and the title of the Deck. All values are validated and the added to the Deck List.
+Most long processing events presents and activity indicator to the user. Actions like creating a Deck or a Card or finishing a Quiz shows alerts to the user, as a way to confirm the action's success of failure.
+The user is remembered to study everyday at 19:30 through the app notification show on the Android task bar.
 
 ## Caveats
 
 Some caveats that could be improved on future releases:
-* All React components of this project were created trying to follow the DO ONE THING principle and all good practices taught during the course, however due to React development unexperience, they may have grown more than expected.
-* The components should be better segregated to Presentational and Container Components, may even use PureComponents.
-* Some common behavior should be placed on a parent component class and inherited.
-* Make Deck and Card editing, giving delete option also.
-* Show a Deck's Card list and allow inline editing.
-* Make Deck and Card list sorting options, saved by screen.
-* Improve AsyncStorage management to allow more operations and user's full control of its data.
-* All components' styles could be improved.
-* Ensure that `sharedOperations.showAlert()` function calls managed by shared userMessage redux state shows only once to the user.
-* Improve iOS screen styles, make platform unique instructions where required and test on a real Apple device.
+
+- All React components of this project were created trying to follow the DO ONE THING principle and all good practices taught during the course, however due to React development unexperience, they may have grown more than expected.
+- The components should be better segregated to Presentational and Container Components, may even use PureComponents.
+- Some common behavior should be placed on a parent component class and inherited.
+- Make Deck and Card content editing, giving delete option also on button or list item long press action.
+- Show a Deck's Card list and allow inline Card object edit and delete.
+- Make Deck and Card list sorting options, saved by screen.
+- Show Deck and Card items count on each own lists.
+- Improve AsyncStorage management to allow more operations and user's full control of its data.
+- Capture stack navigation go back event to show Card Quiz exist alert.
+- All components' styles could be improved.
+- Ensure that `sharedOperations.showAlert()` function calls managed by shared userMessage redux state shows only once to the user.
+- Improve iOS screen styles, make platform unique instructions where required and test on a real Apple device/emulator.
 
 ## Create React Native App
 
@@ -116,31 +115,30 @@ This project was bootstrapped with [`expo init`](https://expo.io/learn).
 
 ## AsyncStorage Management
 
-To simplify the development process, Udacity provided a backend server to develop against.
-The backend API uses a fixed set of categories, decks and comments data.
-It is kept on JavaScript files at `..\api-server\**` path.
+No backend API were used. All data are persisted on two AsyncStorage indexes, the `Flashcards:decks` and the `Flashcards:cards`, declared on `STORAGE_KEYS` enumeration at `utils\constants.js` file.
 
+TODO: write about api functions and default values, review DeckCardsQuiz navigation.goBack action, add comments, send to evaluation
 To interact with REST web service operations on this backend server the [`restAPI.js`](https://github.com/ragumz/udacity-react-project02-redux-readable/blob/master/app-readable/src/utils/restAPI.js) contains the methods to perform necessary operations on the backend:
 
-* [`getAllCategories`]
-* [`getAllDecks`]
-* [`getAllDecksFromCategory(categoryId)`]
-* [`addNewDeck(deck)`]
-* [`getDeck(deckId)`]
-* [`placeDeckVote({id, option})`]
-* [`updateDeck({id, category, title, author, body, deleted = false})`]
-* [`deleteDeck(deckId)`]
-* [`getAllCommentsFromDeck(deckId)`]
-* [`addNewComment(comment)`]
-* [`placeCommentVote({id, option})`]
-* [`updateComment`]
-* [`deleteComment(commentId)`]
+- [`getAllCategories`]
+- [`getAllDecks`]
+- [`getAllDecksFromCategory(categoryId)`]
+- [`addNewDeck(deck)`]
+- [`getDeck(deckId)`]
+- [`placeDeckVote({id, option})`]
+- [`updateDeck({id, category, title, author, body, deleted = false})`]
+- [`deleteDeck(deckId)`]
+- [`getAllCommentsFromDeck(deckId)`]
+- [`addNewComment(comment)`]
+- [`placeCommentVote({id, option})`]
+- [`updateComment`]
+- [`deleteComment(commentId)`]
 
 ## Final Notes
 
-* This repository contains a particular React Native project code for Udacity instructors evaluation only.
-* Students are encouraged to try developing this exercise by themselves and "NOT TO COPY" the source codes.
-* All the text, comments and documentation was made in English, to practice and foreseeing future Udacity courses. However, some errors may have been left behind due the lack of revision time!
-* The Git commit messages were short and clean.
-* It was considere some concepts from [`React Fundamentals My Reads project`](https://github.com/ragumz/udacity-react-project01-myreads) of my creation.
-* All the source code were produced between 20 and 00:30 hours after a long day of 9 hours of architecture, engineering and programming. Also produded on weekends, when my 1,5 year old daughter allowed. That is mid-age student life!
+- This repository contains a particular React Native project code for Udacity instructors evaluation only.
+- Students are encouraged to try developing this exercise by themselves and "NOT TO COPY" the source codes.
+- All the text, comments and documentation was made in English, to practice and foreseeing future Udacity courses. However, some errors may have been left behind due the lack of revision time!
+- The Git commit messages were short and clean.
+- It was considere some concepts from [`React Redux Readable project`](https://github.com/ragumz/udacity-react-project02-redux-readable) of my creation.
+- All the source code were produced between 20 and 00:30 hours after a long day of 9 hours of architecture, engineering and programming. Also produded on weekends, when my 1,5 year old daughter allowed. That is mid-age student life!
