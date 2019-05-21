@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { AppLoading } from 'expo';
-import { View, Text, StyleSheet, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, BackHandler, ActivityIndicator } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
 import CardQuiz from '../card/CardQuiz';
@@ -153,7 +152,9 @@ class DeckCardsQuiz extends Component {
     if (this.state.loading === true
         || commons.canShowLoading(constants.OWNER_VIEWS.DECK_QUIZ, shared.loading)) {
       //show loading
-      return <AppLoading />;
+      return <View style={styles.loading}>
+              <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
+            </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_QUIZ, shared.userMessage)) {
       //show error/success alert modal dialog
@@ -300,5 +301,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10
   },
 });

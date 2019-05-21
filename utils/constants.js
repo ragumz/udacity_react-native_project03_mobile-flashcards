@@ -43,9 +43,27 @@ export const EMTPY_DECK = Object.freeze({
   id: '',
   title: '',
   created: null,
-  quizStatistics: { timesCompleted: 0, totalTimeMilis: 0 },
-  bestScore:  { correctAnswers: -1, startTime: null, endTime: null, deckSize: 0 },
-  worstScore: { correctAnswers: -1, startTime: null, endTime: null, deckSize: 0 },
+//  quizStatistics: { timesCompleted: 0, totalTimeMilis: 0 },
+//  bestScore:  EMPTY_DECK_SCORE,
+//  worstScore: EMPTY_DECK_SCORE,
+});
+
+/**
+ * @description Empty Deck Quiz Statistics freezed object
+ */
+export const EMPTY_DECK_QUIZ_STATS = Object.freeze({
+  timesCompleted: 0,
+  totalTimeMilis: 0,
+});
+
+/**
+ * @description Empty Deck Quiz Score freezed object
+ */
+export const EMPTY_DECK_SCORE = Object.freeze({
+  correctAnswers: -1,
+  startTime: null,
+  endTime: null,
+  deckSize: 0,
 });
 
 /**
@@ -58,9 +76,36 @@ export const EMTPY_CARD = Object.freeze({
   answer: '',
   difficulty: 0,
   created: null,
-  quizStatistics: { correct: 0, incorrect: 0, totalTimeMilis: 0 },
-  bestScore:  { startTime: null, endTime: null },
-  worstScore: { startTime: null, endTime: null },
+//  quizStatistics: { correct: 0, incorrect: 0, totalTimeMilis: 0 },
+//  bestScore:  { startTime: null, endTime: null },
+//  worstScore: { startTime: null, endTime: null },
+});
+
+/**
+ * @description Empty Card Quiz Statistics freezed object
+ */
+export const EMPTY_CARD_QUIZ_STATS = Object.freeze({
+  correct: 0,
+  incorrect: 0,
+  totalTimeMilis: 0,
+});
+
+/**
+ * @description Empty Card Quiz Score freezed object
+ */
+export const EMPTY_CARD_SCORE = Object.freeze({
+  startTime: null,
+  endTime: null,
+});
+
+/**
+ * @description Deck and Card common inner object fields
+ */
+export const ENTITY_COMMON_FIELDS = Object.freeze({
+  created: 'created',
+  quizStatistics: 'quizStatistics',
+  bestScore: 'bestScore',
+  worstScore: 'worstScore',
 });
 
 /**

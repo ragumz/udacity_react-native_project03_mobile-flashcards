@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AppLoading } from 'expo';
 import { handleInitialData, showAlert } from '../common/sharedOperations';
 import { hideMessage } from '../common/sharedActions';
-import { View } from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import DeckList from '../deck/DeckList';
 import { OWNER_VIEWS } from '../utils/constants';
 import * as commons from '../utils/commons';
+import { COLORS } from '../utils/constants'
 import { STORAGE_KEYS } from '../utils/constants';
 import { scheduleNotification } from '../utils/notifications';
 //import { clearStorage } from '../utils/api';
@@ -37,7 +37,9 @@ class Home extends Component {
   render() {
     const { loading, userMessage, dispatch } = this.props;
     if (commons.canShowLoading(OWNER_VIEWS.HOME, loading)) {
-      return <AppLoading />;
+      return <View style={styles.loading}>
+          <ActivityIndicator size='large' color={COLORS.BLUE} />
+        </View>;
     }
     if (commons.canShowAlert(OWNER_VIEWS.HOME, userMessage)) {
       showAlert(
@@ -67,3 +69,12 @@ function mapStateToProps({ shared }) {
 }
 
 export default connect(mapStateToProps)(Home);
+
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10
+  }
+});

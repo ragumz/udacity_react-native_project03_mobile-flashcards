@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { AppLoading } from 'expo';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
 import CustomButton from '../common/CustomButton';
@@ -97,7 +96,10 @@ class DeckEdit extends Component {
    */
   handleClickCreateDeck = () => {
     this.setState(currState => {
-      currState.editDeck['created'] = new Date();
+      currState.editDeck[constants.ENTITY_COMMON_FIELDS.created] = new Date();
+      currState.editDeck[constants.ENTITY_COMMON_FIELDS.quizStatistics] = Object.assign({}, constants.EMPTY_DECK_QUIZ_STATS);
+      currState.editDeck[constants.ENTITY_COMMON_FIELDS.bestScore] = Object.assign({}, constants.EMPTY_DECK_SCORE);
+      currState.editDeck[constants.ENTITY_COMMON_FIELDS.worstScore] = Object.assign({}, constants.EMPTY_DECK_SCORE);
       return currState;
     }, () => {
       const { editDeck } = this.state;
@@ -164,7 +166,9 @@ class DeckEdit extends Component {
     const { loading, userMessage, dispatch } = this.props;
     if (commons.canShowLoading(constants.OWNER_VIEWS.DECK_EDIT, loading)) {
       //show loading
-      return <AppLoading />;
+      return <View style={styles.loading}>
+              <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
+            </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_EDIT, userMessage)) {
       //show error/success alert modal dialog
@@ -265,5 +269,11 @@ const styles = StyleSheet.create({
     width: 150,
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10
+  },
 });

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { AppLoading } from 'expo';
-import { View, Text, TextInput, Slider, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Slider, StyleSheet, ActivityIndicator } from 'react-native';
 import * as commons from '../utils/commons';
 import * as constants from '../utils/constants';
 import CustomButton from '../common/CustomButton';
@@ -99,6 +98,9 @@ class CardEdit extends Component {
     this.setState(currState => {
       currState.editCard['deck'] = deck.id;
       currState.editCard['created'] = new Date();
+      currState.editCard[constants.ENTITY_COMMON_FIELDS.quizStatistics] = Object.assign({}, constants.EMPTY_CARD_QUIZ_STATS);
+      currState.editCard[constants.ENTITY_COMMON_FIELDS.bestScore] = Object.assign({}, constants.EMPTY_CARD_SCORE);
+      currState.editCard[constants.ENTITY_COMMON_FIELDS.worstScore] = Object.assign({}, constants.EMPTY_CARD_SCORE);
       return currState;
     }, () => {
       const { editCard } = this.state;
@@ -155,7 +157,9 @@ class CardEdit extends Component {
 
     if (commons.canShowLoading(constants.OWNER_VIEWS.CARD_EDIT, loading)) {
       //show loading
-      return <AppLoading />;
+      return <View style={styles.loading}>
+              <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
+            </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.CARD_EDIT, userMessage)) {
       //show error/success alert modal dialog
@@ -281,5 +285,11 @@ const styles = StyleSheet.create({
     width: 150,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10
   }
 });
