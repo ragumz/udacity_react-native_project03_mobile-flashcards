@@ -16,6 +16,9 @@ class DeckItem extends Component {
     rotation: new Animated.Value(0)
   };
 
+  /**
+   * @description Run the animation defined on the state
+   */
   runAnimation = () => {
     const { rotation } = this.state;
     //reset animation
@@ -29,6 +32,9 @@ class DeckItem extends Component {
     });
   };
 
+  /**
+   * @description Navigate back to the Deck detail component screen
+   */
   handleNavigateToDeck = () => {
     const { deck, doNavigate, navigation } = this.props;
     if (doNavigate === true) {
@@ -42,11 +48,17 @@ class DeckItem extends Component {
     }
   };
 
+  /**
+   * @description Remove this Deck and all its Cards permanently
+   */
   deleteDeck = () => {
     const { deck, dispatch } = this.props;
     dispatch(handleDeleteDeck(constants.OWNER_VIEWS.DECK_ITEM, deck.id));
   }
 
+  /**
+   * @description Ask the user through an Alert confirm the Deck deletion
+   */
   handleAskDelete = () => {
     const { doNavigate } = this.props;
     if (doNavigate === true) {
@@ -122,6 +134,9 @@ function mapStateToProps({ cards }, { deck, doNavigate, viewStyle }) {
 
 export default withNavigation(connect(mapStateToProps)(DeckItem));
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   empty: {
     alignItems: 'center',

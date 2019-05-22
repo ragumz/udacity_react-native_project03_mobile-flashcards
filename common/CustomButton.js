@@ -1,22 +1,28 @@
 import React from 'react';
-import { Text, TouchableHighlight, StyleSheet, Platform } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { COLORS } from '../utils/constants';
 
-export default function CustomButton({ children, onPress, style = {}, disabled=false }) {
+/**
+ * @description Function component to draw a button like touchable
+ */
+export default CustomButton = ({ children, onPress, style = {}, disabled=false }) => {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       disabled={disabled}
-      underlayColor={COLORS.WHITE}
+      activeOpacity={0.4}
       onPress={onPress}>
       <Text style={[styles.reset, Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn,
                     style,
                     disabled ? styles.disabled : styles.enabled ]}>
         {children}
       </Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
-}
+};
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   reset: {
     textAlign: 'center',

@@ -3,18 +3,25 @@ import { AsyncStorage } from 'react-native';
 import { STORAGE_KEYS, NOTIFICATION_REPEAT } from './constants';
 import * as commons from './commons';
 
-
+/**
+ * @description Remove all notifications set on OS for the app
+ */
 export function removeAllNotification() {
   return AsyncStorage.removeItem(STORAGE_KEYS.NOTIFICATION_TODAY)
           .then(Notifications.cancelAllScheduledNotificationAsync);
 }
 
+/**
+ * @description Create a new notification on the OS for the app
+ *
+ * @param {string} notificationKey Notification unique key
+ */
 function createNotification(notificationKey) {
   switch (notificationKey) {
     case STORAGE_KEYS.NOTIFICATION_TODAY:
       return {
         title: 'Study today with Flashcards!',
-        body: "Start a quick Flashcards' Quiz to refresh your memory now!",
+        body: "Start a new Quiz to refresh your memory.",
         android: {
           priority: 'high',
           sticky: false,
@@ -30,6 +37,15 @@ function createNotification(notificationKey) {
   }
 }
 
+/**
+ * @description Schedule a new app OS notification
+ *
+ * @param {string} notificationKey Notification unique key
+ * @param {Date} time Date with hour and minute to show notification
+ * @param {constants.NOTIFICATION_REPEAT} repeate Period of notification repetition
+ *
+ * @returns Promise with the notification schedule process to resolve
+ */
 export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_REPEAT.DAY) {
   if (commons.isNull(time)
       || time.getTime() < new Date().getTime()) {
@@ -50,13 +66,13 @@ export function scheduleNotification(notificationKey, time, repeat=NOTIFICATION_
               repeat
             });
             AsyncStorage.setItem(notificationKey, JSON.stringify(true));
-            console.log(`Notification ${notificationKey} is set!`);
+//            console.log(`Notification ${notificationKey} is set!`);
           } else {
             alert('You need to allow Notification permissions for this app. Access OS application setup to change.');
           }
         });
       } else {
-        console.log(`Notification ${notificationKey} is already set!`);
+//        console.log(`Notification ${notificationKey} is already set!`);
       }
     })
     .then(() => {

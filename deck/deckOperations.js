@@ -1,6 +1,6 @@
 import { showMessage, showLoading, hideLoading } from '../common/sharedActions';
 import { submitDeck, removeDeck } from '../utils/api';
-import { addNewDeck, updateDeck, deleteDeck } from './deckActions'
+import { addNewDeck, updateDeck, deleteDeck } from './deckActions';
 
 /**
  * @description Add a new Deck into the storage.

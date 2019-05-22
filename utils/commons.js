@@ -56,7 +56,7 @@ export const formatDate = (timestamp) => {
   const d = new Date(timestamp);
   const time = d.toLocaleTimeString('en-US');
   return `${d.toLocaleDateString('en-US')} ${time}`;
-}
+};
 
 /**
  * @description Reused Tyler's code to generate a Unique Identification
@@ -66,7 +66,7 @@ export const formatDate = (timestamp) => {
  */
 export const generateUID = () => {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-}
+};
 
 /**
  * @description Return and object that contains content to show on MessageDialog component, with
@@ -79,7 +79,7 @@ export const createDeleteMessage = (entityName, handleDeleteYes, handleDeleteNo,
   let messageButtons = [{ text: 'Yes', handleClick: handleDeleteYes },
                         { text: 'No',  handleClick: handleDeleteNo }];
   return { userMessage, messageButtons};
-}
+};
 
 /**
  * Create a text with a message and optional error content
@@ -99,7 +99,7 @@ export const joinMessageText = (message='', error='') => {
     console.error(errorMessage);
   }
   return `${message} ${errorMessage}`
-}
+};
 
 
 /**
@@ -117,7 +117,7 @@ export const getUserMessage = (title='INFORMATION', message='', error, buttons=[
     error,
     buttons,
   };
-}
+};
 
 /**
  * @description Check if an userMessage must be shown as an Alert on the current component
@@ -129,7 +129,8 @@ export const canShowAlert = (ownerViewId, userMessage) => {
   return !isEmpty(ownerViewId) && !isNull(userMessage)
     && ownerViewId === userMessage.ownerViewId
     && userMessage.empty === false;
-}
+};
+
 /**
  * @description Check if an userMessage must be shown as an Alert on the current component
  *
@@ -140,7 +141,7 @@ export const canShowLoading = (ownerViewId, loading) => {
   return !isEmpty(ownerViewId) && !isNull(loading)
     && ownerViewId === loading.ownerViewId
     && loading.active === true;
-}
+};
 
 /**
  * @description Generate an avatar background color based on its id text.
@@ -157,7 +158,7 @@ export const stringToHslColor = (str, s, l) => {
   }
   var h = hash % 360;
   return 'hsl('+h+', '+s+'%, '+l+'%)';
-}
+};
 
 /**
  * @description Get a param from a navigation object
@@ -175,7 +176,7 @@ export const getNavigationParam = (navigation, paramName) => {
     paramValue = navigation.state.params[paramName];
   }
   return paramValue;
-}
+};
 
 /**
  * @description Calculate the difference in miliseconds between two dates
@@ -191,7 +192,7 @@ export const getDateMilisDifference = (startDate, endDate) => {
     endDate = new Date(endDate);
   }
   return Math.abs(endDate - startDate);
-}
+};
 
 /**
  * @description Convert a miliseconds amount to a time text representation
@@ -203,4 +204,4 @@ export const msToTime = (ms) => {
   // Pad to 2 or 3 digits, default is 2
   var pad = (n, z = 2) => ('00' + n).slice(-z);
   return pad(ms/3.6e6|0) + ':' + pad((ms%3.6e6)/6e4 | 0) + ':' + pad((ms%6e4)/1000|0) + '.' + pad(ms%1000, 3);
-}
+};

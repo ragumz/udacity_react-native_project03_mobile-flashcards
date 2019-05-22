@@ -13,6 +13,10 @@ import { showAlert } from '../common/sharedOperations';
  * @description React component to create a new or edit an existing Card.
  */
 class CardEdit extends Component {
+
+  /**
+   * @description Update the app status bar title
+   */
   static navigationOptions = ({ navigation }) => {
     const deckTitle = commons.getNavigationParam(navigation, 'deckTitle');
     const cardId = commons.getNavigationParam(navigation, 'cardId');
@@ -33,6 +37,9 @@ class CardEdit extends Component {
     fieldValidation: {},
   };
 
+  /**
+   * @description Discover if the Card is being created or edited
+   */
   isCreateMode = () => {
     return commons.isEmpty(this.props.card.id);
   };
@@ -47,6 +54,9 @@ class CardEdit extends Component {
     });
   };
 
+  /**
+   * @description Validate the required input fields' values
+   */
   checkInputValues = () => {
     const { editCard } = this.state;
     let isValid = true;
@@ -65,6 +75,9 @@ class CardEdit extends Component {
     return isValid;
   };
 
+  /**
+   * @description Generate a random Card unique identifier
+   */
   generateNewId = () => {
     const { cards } = this.props;
     let newId;
@@ -76,7 +89,7 @@ class CardEdit extends Component {
   };
 
   /**
-   * @description Component handle function to manage Card creation or update
+   * @description Component handle function to manage Card creation or update actions
    */
   handleSubmit = (event, isCreate) => {
     event.preventDefault();
@@ -149,20 +162,20 @@ class CardEdit extends Component {
   render() {
     const { deck, loading, userMessage, dispatch } = this.props;
     if (commons.isNull(deck)) {
-      //show error/success alert modal dialog
+      //show warning alert modal dialog
       showAlert(commons.getUserMessage('WARNING', 'No deck was selected to create or edit cards.', null,
                 [{ text: 'OK', onPress: () => navigation.goBack() }]));
       return <View></View>;
     }
 
     if (commons.canShowLoading(constants.OWNER_VIEWS.CARD_EDIT, loading)) {
-      //show loading
+      //show loading ui if directed to this component
       return <View style={styles.loading}>
               <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
             </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.CARD_EDIT, userMessage)) {
-      //show error/success alert modal dialog
+      //show alert dialog if directed to this component
       showAlert(
         Object.assign({}, userMessage, {
           buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(constants.OWNER_VIEWS.CARD_EDIT)) }]
@@ -265,6 +278,9 @@ function mapStateToProps({ decks, cards, shared }, { navigation }) {
 
 export default withNavigation(connect(mapStateToProps)(CardEdit));
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   main: {
     flex: 1,

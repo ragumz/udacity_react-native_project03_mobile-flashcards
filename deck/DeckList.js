@@ -5,7 +5,7 @@ import DeckItem from './DeckItem';
 import * as commons from '../utils/commons';
 
 /**
- * @description React component to show a Deck's list.
+ * @description React component to show all Decks list.
  */
 class DeckList extends Component {
   render() {
@@ -34,6 +34,9 @@ function mapStateToProps({ decks }) {
 
 export default connect(mapStateToProps)(DeckList);
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   list: {
     flex: 1,

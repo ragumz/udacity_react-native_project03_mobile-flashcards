@@ -6,9 +6,7 @@ import { getDecks, getCards } from '../utils/api';
 import * as commons from '../utils/commons';
 
 /**
- * @description Global function to load all known objects of Cards and Decks from storage.
- *
- *
+ * @description Global function to load all known objects of Cards and Decks from the AsyncStorage.
  */
 export function handleInitialData(ownerViewId) {
   return dispatch => {
@@ -27,12 +25,12 @@ export function handleInitialData(ownerViewId) {
 }
 
 /**
- * Show an alert modal dialog with message to the user
+ * Show an alert modal dialog with message to the user at the current component.
  *
- * @param {Object} userMessage An object containing title, message, error and buttons fields
+ * @param {Object} userMessage An object containing title, message, error and buttons fields.
  */
 export function showAlert({title='INFORMATION', message, error='', buttons=[]}) {
-  // Works on both iOS and Android
+  // Should work on both OSs: iOS and Android.
   Alert.alert(
     title,
     commons.joinMessageText(message, error),

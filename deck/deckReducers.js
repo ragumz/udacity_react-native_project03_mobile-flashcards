@@ -3,12 +3,13 @@ import { arrayToIndexedObject } from '../utils/commons';
 
 /**
  * @description Deck's reducer implementation to manage all Deck thunk actions.
+ *
  * @param {Object} state Current reducer state object
  * @param {Object} action Current reducer thunk action object
  */
 export default function decks(state = {}, action) {
   switch (action.type) {
-    //add all backend server loaded Decks into state
+    //add all AsyncStorage loaded Decks into state
     case DECK_ACTIONS.RECEIVE:
       return {
         ...state,
@@ -36,7 +37,9 @@ export default function decks(state = {}, action) {
     //delete an existing Deck object from state through delete flag field
     case DECK_ACTIONS.DELETE:
       return arrayToIndexedObject(
-        Object.values(state).filter(deck => deck.id !== action.deckId)
+        Object.values(state).filter(
+          deck => deck.id !== action.deckId
+        )
       );
 
     default:

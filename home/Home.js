@@ -12,22 +12,24 @@ import { scheduleNotification } from '../utils/notifications';
 //import { clearStorage } from '../utils/api';
 
 /**
- * @description Home page React Component with all categories and posts lists
+ * @description Home page component to initialize AsyncStorage and show all Decks
  */
 class Home extends Component {
   /**
    * @description Lifecycle function to initialize application state
    */
   componentDidMount() {
-//    console.log('Restarting data...');
+    //clear the AsyncStorage and reset to default Decks and Cards data
 //    clearStorage();
-  //schedule a new daily notification for everyday study quiz
+
+    //schedule a new daily notification for everyday study quiz
     try {
       scheduleNotification(STORAGE_KEYS.NOTIFICATION_TODAY);
     } catch (error) {
       console.log(error.stack);
     }
-    console.log('Loading data...');
+
+    //load AsyncStorage data
     this.props.dispatch(handleInitialData(OWNER_VIEWS.HOME));
   }
 
@@ -37,17 +39,20 @@ class Home extends Component {
   render() {
     const { loading, userMessage, dispatch } = this.props;
     if (commons.canShowLoading(OWNER_VIEWS.HOME, loading)) {
+      //show loading ui if directed to this component
       return <View style={styles.loading}>
           <ActivityIndicator size='large' color={COLORS.BLUE} />
         </View>;
     }
     if (commons.canShowAlert(OWNER_VIEWS.HOME, userMessage)) {
+      //show alert dialog if directed to this component
       showAlert(
         Object.assign({}, userMessage, {
           buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(OWNER_VIEWS.HOME)) }]
         })
       );
     }
+    //presents the DeckList component
     return (
       <View style={{ flex: 1 }}>
         <DeckList />
@@ -70,6 +75,9 @@ function mapStateToProps({ shared }) {
 
 export default connect(mapStateToProps)(Home);
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   loading: {
     flex: 1,

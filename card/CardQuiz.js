@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated, Easing } from 'react-native';
-import * as commons from '../utils/commons';
 import { COLORS, QUIZ_ANSWERS } from '../utils/constants';
 import CustomButton from '../common/CustomButton';
 
+/**
+ * @description React component to present a answerable item on the Card Quiz.
+ */
 class CardQuiz extends Component {
 
   /**
@@ -16,6 +18,9 @@ class CardQuiz extends Component {
     rotation: new Animated.Value(0),
   };
 
+  /**
+   * @description Run the animation defined on the state
+   */
   runAnimation = () => {
     const { rotation } = this.state;
     //reset animation
@@ -29,6 +34,9 @@ class CardQuiz extends Component {
     });
   };
 
+  /**
+   * @description Identify whether to present the Question or the Answer
+   */
   handleSwitchText = () => {
     this.runAnimation().start(() => {
       this.setState(currState => {
@@ -38,6 +46,9 @@ class CardQuiz extends Component {
     });
   }
 
+  /**
+   * @description After user decision, run the answer function to compute statistics
+   */
   handleAnswer = (answer) => {
     const { startTime } = this.state;
     const { card, handleAnswer } = this.props;
@@ -46,6 +57,11 @@ class CardQuiz extends Component {
     );
   }
 
+  /**
+   * @description React lifecycle function to validate new properties values and update the state
+   *
+   * @param {Props} nextProps
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.card.id !== this.props.card.id) {
       this.setState({
@@ -57,12 +73,11 @@ class CardQuiz extends Component {
   }
 
   render() {
-    const { isQuestion, isAnswered } = this.state;
+    const { isQuestion, isAnswered, rotation } = this.state;
     const { card } = this.props;
     const text = isQuestion ? card.question : card.answer;
-    const switchText = isQuestion ? 'Answer' : 'Question';
-    //setup animation
-    const { rotation } = this.state;
+    const switchText = isQuestion ? 'Tap to Answer' : 'Tap to Question';
+    //setup spin card animation
     const rotate = rotation.interpolate({
       inputRange: [0, 1],
       outputRange: [`0deg`, `360deg`]
@@ -70,23 +85,23 @@ class CardQuiz extends Component {
     return (
       <View
         style={styles.main}>
-        <Animated.View
-          style={[styles.card, { transform: [{ rotateY: rotate }] }]}>
-          <Text
-            style={styles.showingText}>
-            {text}
-          </Text>
-          <TouchableWithoutFeedback
-            onPress={() => this.handleSwitchText()}>
+        <TouchableWithoutFeedback
+          onPress={() => this.handleSwitchText()}>
+          <Animated.View
+            style={[styles.card, { transform: [{ rotateY: rotate }] }]}>
+            <Text
+              style={styles.showingText}>
+              {text}
+            </Text>
             <Text
               style={styles.switchButton}>
               {switchText}
             </Text>
-          </TouchableWithoutFeedback>
-          <Text style={styles.label}>
-            (Dificulty Level: {card.difficulty} of 10)
-          </Text>
-        </Animated.View>
+            <Text style={styles.label}>
+              (Difficulty Level: {card.difficulty} of 10)
+            </Text>
+          </Animated.View>
+        </TouchableWithoutFeedback>
         <View
           style={[styles.panel, {justifyContent: 'flex-end'}]}>
           <CustomButton
@@ -109,6 +124,9 @@ class CardQuiz extends Component {
 
 export default CardQuiz;
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   main: {
     flex: 1,

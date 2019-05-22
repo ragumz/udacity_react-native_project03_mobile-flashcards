@@ -19,7 +19,7 @@ export function receiveCards(cards) {
     type: CARD_ACTIONS.RECEIVE,
     cards
   };
-}
+};
 
 /**
  * @description Card reducer action to create a new Card object
@@ -30,7 +30,7 @@ export function addNewCard(card) {
     type: CARD_ACTIONS.CREATE,
     card: card
   }
-}
+};
 
 /**
  * @description Card reducer action to delete an existing Card object
@@ -41,7 +41,7 @@ export function deleteCard(cardId) {
     type: CARD_ACTIONS.DELETE,
     cardId
   }
-}
+};
 
 /**
  * @description Card reducer action to update a Card object fields
@@ -52,7 +52,7 @@ export function updateCard(card) {
     type: CARD_ACTIONS.UPDATE,
     card
   }
-}
+};
 
 /**
  * @description Card reducer action to update a collection of Cards in an object parameter
@@ -63,4 +63,4 @@ export function updateMultiCards(cards) {
     type: CARD_ACTIONS.MULTI_UPDATE,
     cards
   }
-}
+};

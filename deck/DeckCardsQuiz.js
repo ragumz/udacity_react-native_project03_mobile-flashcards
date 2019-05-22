@@ -9,18 +9,26 @@ import CustomButton from '../common/CustomButton';
 import { showAlert } from '../common/sharedOperations';
 import { handleUpdateMultiCards } from '../card/cardOperations';
 import { handleUpdateDeck } from './deckOperations';
+//import { AntDesign } from '@expo/vector-icons';
 
 /**
  * @description React component to start a Deck's Card Quiz.
  */
 class DeckCardsQuiz extends Component {
+
+  /**
+   * @description Update the app status bar title
+   */
   static navigationOptions = ({ navigation }) => {
     const deckTitle = commons.getNavigationParam(navigation, 'deckTitle');
     return {
       title: `Quiz : Deck ${deckTitle}`,
       headerTitleStyle: {
         fontWeight: 'bold'
-      }
+      },
+      /*TODO: ask the user to confirm Quiz exit
+      headerLeft: <AntDesign name='arrowleft' color={constants.COLORS.WHITE} size={34}
+                      onPress={ () => { navigation.goBack() }} />,*/
     };
   };
 
@@ -36,6 +44,9 @@ class DeckCardsQuiz extends Component {
     loading: false,
   };
 
+  /**
+   * @description Ask the user when exiting the Quiz without finishing it when OS back button pressed.
+   */
   handleDeviceBackPress = () => {
     const { navigation } = this.props;
     const { isFinished } = this.state;
@@ -46,6 +57,9 @@ class DeckCardsQuiz extends Component {
     return true;
   }
 
+  /**
+   * @description Compute a Card Quiz answer by the user
+   */
   handleAnswer = (card, answer, startTime) => {
     const endTime = new Date();
     const { quizCards } = this.props;
@@ -64,13 +78,16 @@ class DeckCardsQuiz extends Component {
     });
   }
 
+  /**
+   * @description Compute all Cards Quiz answers and generate global Deck and Cards statistics
+   */
   handleDeckAndCardsStatistics = () => {
     let card, correctCount=0;
     const { cardsAnswer, startTime, endTime } = this.state;
     const { deck, cards, quizCards, dispatch } = this.props;
     const cardsUpd = {};
     this.setState({ loading: true });
-    //calculate card global individual statistics
+    //calculate each card global statistics
     cardsAnswer.map(ca => {
       card = cards[ca.id];
       const { quizStatistics, bestScore, worstScore } = card;
@@ -91,10 +108,9 @@ class DeckCardsQuiz extends Component {
         worstScore.startTime = ca.startTime;
         worstScore.endTime = ca.endTime;
       }
-      //TODO: acumular totalTime, atualizar best e worst
       cardsUpd[ca.id] = Object.assign({}, card, { quizStatistics, bestScore, worstScore });
     });
-    //calculate deck global statistics
+    //calculate the current deck global statistics
     const { quizStatistics, bestScore, worstScore } = deck;
     quizStatistics.timesCompleted = quizStatistics.timesCompleted + 1;
     quizStatistics.totalTimeMilis = quizStatistics.totalTimeMilis + commons.getDateMilisDifference(startTime, endTime);
@@ -116,13 +132,16 @@ class DeckCardsQuiz extends Component {
       worstScore.deckSize = deckSize;
     }
     const deckUpd = Object.assign({}, deck, { quizStatistics, bestScore, worstScore });
-    //update storage and redux state
+    //update storage and redux state with the Deck and Cards statistics
     var promiseChain = Promise.resolve();
     promiseChain = promiseChain.then(() => dispatch(handleUpdateMultiCards(constants.OWNER_VIEWS.DECK_QUIZ, cardsUpd)));
     promiseChain = promiseChain.then(() => dispatch(handleUpdateDeck(constants.OWNER_VIEWS.DECK_QUIZ, deckUpd, false)));
     promiseChain.then(() => this.setState({ loading: false }))
   }
 
+  /**
+   * @description Reset component states to reset the Quiz
+   */
   handleRestartQuiz = () => {
     this.setState({
       startTime: new Date(),
@@ -134,16 +153,36 @@ class DeckCardsQuiz extends Component {
     });
   };
 
+  /**
+   * @description Action to go back to previous screen
+   */
   handleBackToDeck = () => {
     this.props.navigation.goBack();
   }
 
+  /**
+   * @description Lifecycle function run before mounting the component
+   */
+  componentWillMount() {
+    /*TODO: this.props.navigation.setParams({
+      onBackPress: this.handleDeviceBackPress,
+    });*/
+  }
+
+  /**
+   * @description Lifecycle function run after the component is mounted
+   */
   componentDidMount() {
+    //add one OS back button press action
     BackHandler.addEventListener('hardwareBackPress', this.handleDeviceBackPress);
     this.setState({ startTime: new Date() });
   }
 
+  /**
+   * @description Lifecycle function run before unmounting the component
+   */
   componentWillUnmount() {
+    //remove the OS back button press action
     BackHandler.removeEventListener('hardwareBackPress', this.handleDeviceBackPress);
   }
 
@@ -151,13 +190,13 @@ class DeckCardsQuiz extends Component {
     const { cards, quizCards, shared } = this.props;
     if (this.state.loading === true
         || commons.canShowLoading(constants.OWNER_VIEWS.DECK_QUIZ, shared.loading)) {
-      //show loading
+      //show loading ui if directed to this component
       return <View style={styles.loading}>
               <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
             </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_QUIZ, shared.userMessage)) {
-      //show error/success alert modal dialog
+      //show alert dialog if directed to this component
       showAlert(
         Object.assign({}, shared.userMessage, {
           buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(constants.OWNER_VIEWS.DECK_QUIZ)) }]
@@ -171,6 +210,7 @@ class DeckCardsQuiz extends Component {
     if (isFinished === false) {
       card = cards[quizCards[currentCardIndex].id];
     } else {
+      //compute local statistic summary when quiz is finished
       cardsAnswer.forEach(card => {
         if (card.answer === constants.QUIZ_ANSWERS.CORRECT.value) {
           correct = correct + 1;
@@ -198,7 +238,7 @@ class DeckCardsQuiz extends Component {
               You finished this Quiz!
             </Text>
             <Text style={[styles.resultText, {marginBottom: 15, color: constants.COLORS.ORANGE}]}>
-              {percentCorrect > 80 ? 'Congratulations! But don\'t get cocky, keep studying.' : 'Set aside time to study and practice more!'}
+              {percentCorrect > 80 ? 'Congratulations! But don\'t get cocky, keep studying.' : 'Set aside time to study and practice more! Keep an eye on the app notifications.'}
             </Text>
             { percentCorrect >= percentIncorrect &&
               <View style={[styles.panel, {marginBottom: 25}]}>
@@ -268,6 +308,9 @@ function mapStateToProps({ decks, cards, shared }, { navigation }) {
 
 export default withNavigation(connect(mapStateToProps)(DeckCardsQuiz));
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   main: {
     flex: 1,

@@ -1,15 +1,16 @@
 import { CARD_ACTIONS } from './cardActions';
-import { DECK_ACTIONS } from '../deck/deckActions'
+import { DECK_ACTIONS } from '../deck/deckActions';
 import { arrayToIndexedObject } from '../utils/commons';
 
 /**
  * @description Card's reducer implementation to manage all Card thunk actions.
+ *
  * @param {Object} state Current reducer state object
  * @param {Object} action Current reducer thunk action object
  */
 export default function cards(state = {}, action) {
   switch (action.type) {
-    //add all backend server loaded Cards into state
+    //add all AsyncStorage loaded Cards into state
     case CARD_ACTIONS.RECEIVE:
       return {
         ...state,
@@ -43,7 +44,11 @@ export default function cards(state = {}, action) {
 
     //delete an existing Card object from state through delete flag field
     case CARD_ACTIONS.DELETE:
-      return arrayToIndexedObject(Object.values(state).filter(card => card.id !== action.cardId));
+      return arrayToIndexedObject(
+        Object.values(state).filter(
+          card => card.id !== action.cardId
+        )
+      );
 
     //delete Cards from a deleted Deck
     case DECK_ACTIONS.DELETE:

@@ -19,6 +19,9 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import FCStatusBar from './home/FCStatusBar';
 import { COLORS } from './utils/constants';
 
+/**
+ * @description Main screen tabs navigation route configuration
+ */
 const RouteConfigs = {
   ListDecks: {
     screen: Home,
@@ -40,6 +43,9 @@ const RouteConfigs = {
   }
 };
 
+/**
+ * @description Main screen tabs layout
+ */
 const TabNavigatorConfig = {
   navigationOptions: {
     header: null
@@ -61,12 +67,19 @@ const TabNavigatorConfig = {
     }
   }
 };
+
+/**
+ * @description Tab navigation container instance to join the tab route and layout
+ */
 const Tabs = createAppContainer(
   Platform.OS === 'ios'
     ? createBottomTabNavigator(RouteConfigs, TabNavigatorConfig)
     : createMaterialTopTabNavigator(RouteConfigs, TabNavigatorConfig)
 );
 
+/**
+ * @description Stack navigation container instance with all navigable components
+ */
 const MainNavigator = createAppContainer(
   createStackNavigator({
     home: {
@@ -114,6 +127,9 @@ const MainNavigator = createAppContainer(
   })
 );
 
+/**
+ * @description Main app layout and component configuration
+ */
 export default class App extends React.Component {
   render() {
     return (

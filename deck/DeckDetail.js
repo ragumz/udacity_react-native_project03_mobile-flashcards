@@ -7,7 +7,14 @@ import { COLORS } from '../utils/constants';
 import DeckItem from './DeckItem';
 import CustomButton from '../common/CustomButton';
 
+/**
+ * @description React component to show all Deck's details and action buttons.
+ */
 class DeckDetail extends Component {
+
+  /**
+   * @description Update the app status bar title
+   */
   static navigationOptions = ({ navigation }) => {
     const { deckId } = navigation.state.params;
     return {
@@ -18,6 +25,9 @@ class DeckDetail extends Component {
     };
   };
 
+  /**
+   * @description Navigate to the Card editing component to add a new Card
+   */
   handleAddCard = () => {
     const { deck, navigation } = this.props;
     navigation.navigate('CardEdit', {
@@ -27,6 +37,9 @@ class DeckDetail extends Component {
     });
   }
 
+  /**
+   * @description Nativate to the Card quiz component to answer all questions
+   */
   handleStartQuiz = () => {
     const { deck, navigation } = this.props;
     navigation.navigate('DeckCardsQuiz', {
@@ -40,6 +53,7 @@ class DeckDetail extends Component {
     const { created, quizStatistics, bestScore, worstScore } = deck;
     const totalTime = commons.msToTime(quizStatistics.totalTimeMilis);
     let bestScorePercent, bestScoreTime, bestScoreDate;
+    //calculate global Deck statistics
     if (bestScore.correctAnswers > -1) {
       bestScorePercent = (bestScore.correctAnswers/bestScore.deckSize)*100;
       bestScorePercent = bestScorePercent.toFixed(0);
@@ -116,6 +130,9 @@ function mapStateToProps({ decks, cards }, { navigation }) {
 
 export default withNavigation(connect(mapStateToProps)(DeckDetail));
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   detail: {
     flex: 1,

@@ -1,6 +1,6 @@
 import { showMessage, showLoading, hideLoading } from '../common/sharedActions';
 import { submitCard, submitMultiCards } from '../utils/api';
-import { addNewCard, updateCard, updateMultiCards } from './cardActions'
+import { addNewCard, updateCard, updateMultiCards } from './cardActions';
 
 /**
  * @description Add a new Card into the storage.
@@ -17,7 +17,7 @@ export function handleAddNewCard(ownerViewId, card) {
       dispatch(hideLoading(ownerViewId))
     );
   };
-}
+};
 
 /**
  * @description Update a Card into the storage.
@@ -38,7 +38,7 @@ export function handleUpdateCard(ownerViewId, card, showMessage=true) {
     );
     return promiseChain;
   };
-}
+};
 
 /**
  * @description Update a collection of Cards objects indexed by their IDs into the storage.
@@ -54,4 +54,4 @@ export function handleUpdateMultiCards(ownerViewId, cards) {
       dispatch(hideLoading(ownerViewId))
     );
   };
-}
+};

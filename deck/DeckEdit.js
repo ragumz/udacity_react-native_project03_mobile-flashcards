@@ -10,9 +10,13 @@ import { hideMessage } from '../common/sharedActions';
 import { showAlert } from '../common/sharedOperations';
 
 /**
- * @description React component to create a new or edit an existing Deck.
+ * @description React component to create a new Deck or edit an existing one.
  */
 class DeckEdit extends Component {
+
+  /**
+   * @description Update the app status bar title
+   */
   static navigationOptions = ({ navigation }) => {
     const deckId = commons.getNavigationParam(navigation, 'deckId');
     return {
@@ -32,6 +36,9 @@ class DeckEdit extends Component {
     fieldValidation: {},
   };
 
+  /**
+   * @description Discover if the Deck is being created or edited
+   */
   isCreateMode = () => {
     return commons.isEmpty(this.props.deck.id);
   };
@@ -47,6 +54,9 @@ class DeckEdit extends Component {
     });
   };
 
+  /**
+   * @description Validate the required input fields' values
+   */
   checkInputValues = () => {
     const { editDeck } = this.state;
     let isValid = true;
@@ -65,6 +75,9 @@ class DeckEdit extends Component {
     return isValid;
   };
 
+  /**
+   * @description Guarantee the uniqueness of the identifier checking over all Deck objects
+   */
   checkNotExistingId = () => {
     const { decks } = this.props;
     const { editDeck } = this.state;
@@ -78,7 +91,7 @@ class DeckEdit extends Component {
   };
 
   /**
-   * @description Component handle function to manage Deck creation or update
+   * @description Manage Deck creation or update
    */
   handleSubmit = (event, isCreate) => {
     event.preventDefault();
@@ -92,7 +105,7 @@ class DeckEdit extends Component {
   };
 
   /**
-   * @description Component handle function to create a new Deck through reducer actions
+   * @description Create a new Deck through reducer actions
    */
   handleClickCreateDeck = () => {
     this.setState(currState => {
@@ -112,7 +125,7 @@ class DeckEdit extends Component {
   };
 
   /**
-   * @description Component handle function to update an existing Deck through reducer actions
+   * @description Update an existing Deck through reducer actions
    */
   handleClickUpdateDeck = () => {
     const { editDeck } = this.state;
@@ -124,7 +137,7 @@ class DeckEdit extends Component {
   };
 
   /**
-   * @description Component handle function when user end a Deck edition, saving it or not.
+   * @description After finishing a Deck edition, save it or not.
    */
   handleFinishedEdit = () => {
     if (this.isCreateMode()) {
@@ -165,13 +178,13 @@ class DeckEdit extends Component {
   render() {
     const { loading, userMessage, dispatch } = this.props;
     if (commons.canShowLoading(constants.OWNER_VIEWS.DECK_EDIT, loading)) {
-      //show loading
+      //show loading ui if directed to this component
       return <View style={styles.loading}>
               <ActivityIndicator size='large' color={constants.COLORS.BLUE} />
             </View>;
     }
     if (commons.canShowAlert(constants.OWNER_VIEWS.DECK_EDIT, userMessage)) {
-      //show error/success alert modal dialog
+      //show alert dialog if directed to this component
       showAlert(
         Object.assign({}, userMessage, {
           buttons: [{ text: 'OK', onPress: () => dispatch(hideMessage(constants.OWNER_VIEWS.DECK_EDIT)) }]
@@ -253,6 +266,9 @@ function mapStateToProps({ decks, shared }, { navigation }) {
 
 export default withNavigation(connect(mapStateToProps)(DeckEdit));
 
+/**
+ * @description Component Flexbox styles definitions
+ */
 const styles = StyleSheet.create({
   main: {
     flex: 1,

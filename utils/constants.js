@@ -118,7 +118,7 @@ export const OWNER_VIEWS = Object.freeze({
   DECK_EDIT: 'DeckEdit',
   CARD_EDIT: 'CardEdit',
   DECK_QUIZ: 'DeckCardsQuiz',
-})
+});
 
 /**
  * @description Constants with the Quiz possible answers
