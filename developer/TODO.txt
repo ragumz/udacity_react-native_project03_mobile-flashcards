@@ -40,7 +40,7 @@ OK Implement Views
 	OK Card Edit
   OK Card Quiz
 
-Bonus Development
+Bonus
   OK Show Quiz Statistics by Card/Deck/Global
   Edit Deck
   Delete Deck
@@ -50,16 +50,20 @@ Bonus Development
   Sort Deck Title/Cards
 
 Fix Bugs
-  Double Alert shown on iOS Simulator
+  OK AppLoading does no show on Android!
+  Double Alert shown on iOS Simulator!
+  StatusBar back button do not ask the user like OS back button on Deck
 
 OK Generate more decks and cards default fixed data
 
 OK Review Animations
 
-Review Layout and UX
+OK Review Layout and UX
 
-Add documentation and comments to source code
+OK Prepare splash and icons
 
-Update README
+OK Add documentation and comments to source code
 
-Submit to evaluation
+OK Update README
+
+OK Submit to evaluation

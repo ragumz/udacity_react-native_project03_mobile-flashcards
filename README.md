@@ -1,7 +1,7 @@
 # Flashcards Project of Rafael Araujo Gumz
 
-This is Flashcards Android smartphone's app project, developed for the final assessment of Udacity's React Native Nanodegree course.
-It was tested only on an 5.5" screen Android 8.1.0 device, so it is no yet suitable to iOS devices or emulators, nor tested on Android emulators or in multiple screen sizes.
+This is the Flashcards Android smartphone's app project, developed for the final assessment of Udacity's React Native Nanodegree course.
+It was tested on a 5.5" screen Android 8.1.0 device, so it is no yet suitable to iOS devices or emulators, nor tested on Android emulators or in multiple screen sizes.
 The app screens' contents were built using Expo, React, React Native, React Navigation, Redux, JSX, JS and equivalent CSS Styles with Flexbox.
 They are dynamic and use own static styles and design inspired on previous examples and exercises of this course.
 This mobile app improve the user study skills with the help of flashcards' collections divided on decks. It allows to add new Decks and its Cards, also running quizzes to study, measuring time and giving statistics about the thought answers.
@@ -12,7 +12,7 @@ There is no authorization or authentication process, as the project's rubric do 
 
 To start using the mobile application right away:
 
-- If [`Expo`](https://expo.io/learn) is not installed on you computer, run `yarn global add expo-cli`. You can use `npm` if preferred.
+- If [`Expo`](https://expo.io/learn) is not installed on you computer, run `yarn global add expo-cli`. You can use `npm`, if preferred. It was used Expo version 2.16.1 during the development.
 - Install all project dependencies running `yarn install` on the project root directory.
 - Start the Expo server running `yarn start` on the project root directory.
 - At the Expo web browser page select the device or emulator/simulator you want to run and wait for Expo to do the rest. Follow Expo's instructions to solve any problem. If needed, Expo can be manually installed on the Android device through Google Play at [`Google Play Expo App`](https://play.google.com/store/apps/details?id=host.exp.exponent&showAllReviews=true).
@@ -27,20 +27,20 @@ To start using the mobile application right away:
 │   ├── cardActions.js # Middleware actions to manage Card entities.
 │   ├── CardEdit.js # React Native component to render Card entity content within inputs, allowing the user to fill its fields' values and save the object into Redux and AsyncStorage storages.
 │   ├── cardOperations.js # Card entity exclusive functions to interact with the AsynStorage data and Redux state.
-│   ├── CardQuiz.js # React Native component to render Card entity content as a Quiz, allowing the user to turn from question to answer and choose what is the tought answerd to consider on statistics presented at the end.
+│   ├── CardQuiz.js # React Native component to render Card entity content as a Quiz, allowing the user to turn from question to answer and choose what is the thought answer to consider on statistics presented at the end.
 │   └── cardReducers.js # Redux reducers executors for Card actions.
 ├── common
-│   ├── CustomButton.js # Default React Native component to configure and show a clicable button.
+│   ├── CustomButton.js # Default React Native custom component to configure and show a clicable button.
 │   ├── sharedActions.js # Middleware actions to manage shared values.
 │   ├── sharedOperations.js # Shared functions to manage values and behaviors.
 │   └── sharedReducers.js # Redux shared reducers executors to keep global data.
 ├── deck
 │   ├── deckActions.js # Middleware actions to manage global Deck values and behaviors
-│   ├── DeckEdit.js # React component to render Deck entity content within inputs, allowing user to fill its field values and save the object.
-│   ├── DeckCardsQuiz.js # React component to render Deck entity and group its Cards into a Quiz and present the Quiz statistic summary.
-│   ├── DeckDetail.js # React component to render Deck entity content that presents all its details and global Quizzes statistics summary.
+│   ├── DeckEdit.js # React component to render Deck entity content within inputs, allowing user to fill its fields' values and save the object.
+│   ├── DeckCardsQuiz.js # React component to render Deck entity, group its Cards into a Quiz and present the Quiz statistic summary.
+│   ├── DeckDetail.js # React component to render Deck entity content that presents all its details and global Quizzes' statistics summary.
 │   ├── DeckItem.js # React component to render Deck entity content to present some fields.
-│   ├── DeckList.js # React component to render a list of all app Decks with DeckItem component.
+│   ├── DeckList.js # React component to render a list of all app Decks with DeckItem components' instances.
 │   ├── deckOperations.js # Deck entity exclusive functions to interact with the AsynStorage data and Redux state.
 │   └── decksReducers.js # Redux reducers executors for Deck actions.
 ├── developer
@@ -48,18 +48,18 @@ To start using the mobile application right away:
 │       ├── icons_source.txt # source URLs from images searched on the web to use as icons and splash.
 │       ├── inspiration-icon-192x192.png # Image used to create the app start splash screen.
 │       └── inspiration-icon.jpg # Image used to create the app icon.
-│   ├── TODO.txt # Text file used to organized the app development process.
+│   ├── TODO.txt # Text file used to simplify and organize the app development process.
 ├── home
 │   ├── FCStatusBar.js # React Native status bar component declaration to present default OS screen title and action content
-│   ├── Home.js # React component to insert initial data and present Deck objects into DeckList.js component.
+│   ├── Home.js # React component to insert initial data and present Decks' objects into DeckList.js component.
 │   └── homeReducers.js # Redux centralized app reducers combinations.
 ├── utils
 │   ├── api.js # Utility functions to create and manage permanent saved data with AsyncStorage.
 │   ├── commons.js # Utility functions to provide common tools.
-│   ├── constants.js # Freezed Objects as enumerations and other app constant values.
+│   ├── constants.js # Freezed Objects kept as enumerations and other app constant values.
 │   ├── middlewares.js # Thunk centralized middleware declaration.
 │   └── notifications.js # Functions to ask permission and schedule notifications to the user.
-├── App.js # Main App component that initializes everythin.
+├── App.js # Main App component that initializes everything.
 ├── app.json # React Native main app configurations.
 ├── package.json # yarn package manager file.
 ├── README.md - # This file.
@@ -79,18 +79,20 @@ The following libraries where added to this project through [`yarn add`](https:/
 - [`react-thunk`](https://www.npmjs.com/package/react-thunk) - Enable thunk middleware to React components.
 - [`redux-thunk`](https://www.npmjs.com/package/redux-thunk) - Enable thunk middleware to Redux.
 
+All dependencies had its versions fixed, removed the ^ char, on `package.json` file due to some erros experienced during development when patch updated them.
+
 ## Mobile Application Screens and Navigation
 
 The current app follows all the required Udacity project [`rubrics`](https://review.udacity.com/#!/rubrics/1215/view).
 It presents a main navigation screen with 2 tabs: one that shows a list of Decks and the other allows the creation of a Deck.
 The Deck item presents the amount of cards that it contains and tapping over a Deck navigate to the Deck Details after a spin animation.
-The Deck Details screen presents the amount of cards, the creation date and the done quizzes statistics, with the acumulated times and the total ran time to complete them. It also presents the user's best and worst score, considering the percent, total correct questions, the required time to complete and the total cards on the Deck at the date. If the total cards change, the best and worst scores are reset on the next quiz.
-Still on Deck Details screen two buttons are presented, the Add Card and Start Quiz, that do exactly what they mean.
-The Add Card option presents the Card Edit screen that requires a question and a answer. The user may choose optionally its difficulty level, just to improve its knowledge. When hitting Create button, it presents an alert window to inform its persistence success.
-The Start Quiz button brings to the user all the Cards on the selected Deck, with their questions and answers. The user may hit the "Answer" or "Question" buttons to switch between them and on the Answer side of the Card, choose if he/she thought the Correct or Incorrect answer. When the user answer the last question, a aler window inform the end of it and the the Quiz results are summarized. When the user go back and exists from it, the Deck Details has its Quiz statistics updated.
-Finally, the New Deck tab presents the Deck Edit screen, where the user is required to input a unique identifier and the title of the Deck. All values are validated and the added to the Deck List.
-Most long processing events presents and activity indicator to the user. Actions like creating a Deck or a Card or finishing a Quiz shows alerts to the user, as a way to confirm the action's success of failure.
-The user is remembered to study everyday at 19:30 through the app notification show on the Android task bar.
+The Deck Details screen presents the amount of Cards, the creation date and the completed quizzes statistics, with the acumulated times and the total ran time to complete them. It also presents the user's best and worst score, considering the percent, total correct questions, the required time to complete and the total Cards on the Deck at the date. If the total Cards change, the best and worst scores are reset on the next quiz.
+Still on Deck Details screen, two buttons are presented, the `Add Card` and `Start Quiz`, that do exactly what they mean.
+The Add Card option presents the Card Edit screen that requires a question and a answer. The user may choose, optionally, its difficulty level, just to improve its knowledge. When hitting `Create` button, it presents an alert window to inform its persistence success or failure.
+The `Start Quiz` button brings to the user all the Cards on the selected Deck, with their questions and answers. The user may hit the `Answer` or `Question` buttons to switch between them and on the Answer side of the Card, choose if he/she thought the Correct or Incorrect answer. When the user answer the last question, an alert window inform the end of it and the Quiz results are summarized. When the user go back and exits from it, the Deck Details has its Quiz global statistics updated.
+Finally, the `New Deck` tab presents the Deck Edit screen, where the user is required to input an unique identifier and the title of the Deck. All values are validated and then added to the Deck List.
+Most long processing events presents and activity indicator to the user. Actions like creating a Deck or a Card or finishing a Quiz shows alerts to the user, as a way to confirm the action's success or failure.
+The user is remembered to study everyday at 19:30 through an OS app notification shown on the Android task bar. The user must allow  notifications for the app, or an alert will be shown to require the user to manually enabled it on OS app configuration screen.
 
 ## Caveats
 
@@ -105,40 +107,38 @@ Some caveats that could be improved on future releases:
 - Show Deck and Card items count on each own lists.
 - Improve AsyncStorage management to allow more operations and user's full control of its data.
 - Capture stack navigation go back event to show Card Quiz exist alert.
+- Export and import Decks and Cards data, or clear all the AsyncSotarge.
 - All components' styles could be improved.
-- Ensure that `sharedOperations.showAlert()` function calls managed by shared userMessage redux state shows only once to the user.
+- Ensure that `sharedOperations.showAlert()` function calls managed by shared userMessage redux state shows only once to the user always.
 - Improve iOS screen styles, make platform unique instructions where required and test on a real Apple device/emulator.
 
 ## Create React Native App
 
-This project was bootstrapped with [`expo init`](https://expo.io/learn).
+This project was bootstrapped with [`expo init`](https://expo.io/learn), predecessor of the deprecated [`create-react-native-app`](https://github.com/react-community/create-react-native-app).
 
 ## AsyncStorage Management
 
-No backend API were used. All data are persisted on two AsyncStorage indexes, the `Flashcards:decks` and the `Flashcards:cards`, declared on `STORAGE_KEYS` enumeration at `utils\constants.js` file.
+No server backend web service rest API were created. All data are persisted on two AsyncStorage indexes, the `Flashcards:decks` and the `Flashcards:cards`, declared on `STORAGE_KEYS` enumeration at `utils/constants.js` file. They were segregated to easy its maintenance and linked each other through Card object `deck` field that contains the Deck object unique identifier.
 
-TODO: write about api functions and default values, review DeckCardsQuiz navigation.goBack action, add comments, send to evaluation
-To interact with REST web service operations on this backend server the [`restAPI.js`](https://github.com/ragumz/udacity-react-project02-redux-readable/blob/master/app-readable/src/utils/restAPI.js) contains the methods to perform necessary operations on the backend:
+To interact with AsyncStorage persistence some functions were created on `utils/api.js`, such as below:
 
-- [`getAllCategories`]
-- [`getAllDecks`]
-- [`getAllDecksFromCategory(categoryId)`]
-- [`addNewDeck(deck)`]
-- [`getDeck(deckId)`]
-- [`placeDeckVote({id, option})`]
-- [`updateDeck({id, category, title, author, body, deleted = false})`]
-- [`deleteDeck(deckId)`]
-- [`getAllCommentsFromDeck(deckId)`]
-- [`addNewComment(comment)`]
-- [`placeCommentVote({id, option})`]
-- [`updateComment`]
-- [`deleteComment(commentId)`]
+- [`clearStorage()`]
+- [`getDecks()`]
+- [`submitDeck(deck)`]
+- [`removeDeck(id)`]
+- [`getCards()`]
+- [`submitCard(card)`]
+- [`removeCard(id)`]
+- [`removeCardsFromDeck(deckId)`]
+
+On this file are the hidden functions `getDefaultDecks()` and `getDefaultCards()` that contains the initial Decks and Cards data.
 
 ## Final Notes
 
 - This repository contains a particular React Native project code for Udacity instructors evaluation only.
 - Students are encouraged to try developing this exercise by themselves and "NOT TO COPY" the source codes.
 - All the text, comments and documentation was made in English, to practice and foreseeing future Udacity courses. However, some errors may have been left behind due the lack of revision time!
-- The Git commit messages were short and clean.
-- It was considere some concepts from [`React Redux Readable project`](https://github.com/ragumz/udacity-react-project02-redux-readable) of my creation.
+- The icon and spash screen images were copyed from public Internet resources, however their source pages are kept.
+- All Git commit messages were short and clean.
+- It was consideres some concepts from [`React Redux Readable project`](https://github.com/ragumz/udacity-react-project02-redux-readable) of my creation.
 - All the source code were produced between 20 and 00:30 hours after a long day of 9 hours of architecture, engineering and programming. Also produded on weekends, when my 1,5 year old daughter allowed. That is mid-age student life!
